@@ -4,12 +4,17 @@ const csv = require("csv-parser");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const cors = require("cors");
 const PORT = process.env.PORT || 4050;
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const csvFilePath = "./db/players_data_cleaned-test.csv";
+// const csvFilePath = "./db/players_data_cleaned-test.csv";
+const csvFilePath = path.join(
+  __dirname,
+  "../server/db/players_data_cleaned-test.csv"
+); // Adjust path as necessary
 let records = [];
 
 // Load CSV data into memory

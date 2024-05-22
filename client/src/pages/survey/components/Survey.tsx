@@ -5,6 +5,7 @@ import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
 import CommonSnackbar from "../../../common/CommonSnackbar";
 import SurveySection from "./SurveySection";
 import { imageService } from "../../../services/utilities/provider";
+import { Skeleton } from "@mui/material";
 
 interface SurveyComponentProps {
   isSurveySubmitted: boolean;
@@ -13,22 +14,9 @@ interface SurveyComponentProps {
 const SurveyComponent: React.FC<SurveyComponentProps> = ({
   isSurveySubmitted,
 }) => {
-  // const [isContextSubmitted, setIsContextSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [images, setImages] = useState<PersonImage[]>([
-    {
-      id: "4067",
-      photo_url:
-        "https://a.espncdn.com/i/headshots/college-football/players/full/4833362.png",
-      filename: "72.Harvey.OL.Oklahoma State Cowboys.jpg",
-    },
-    {
-      id: "10126",
-      photo_url:
-        "https://a.espncdn.com/i/headshots/college-football/players/full/4361070.png",
-      filename: "52.Schramm.LB.Boise State.jpg",
-    },
-  ]);
+  const [images, setImages] = useState<PersonImage[]>([]);
 
   const [answers, setAnswers] = useState<SurveyAnswers[]>([
     {
@@ -46,12 +34,16 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({
   const [openSnack, setIsOpenSnack] = useState(false);
 
   const fetchImages = async () => {
-    imageService.getAll().then((res) => {
-      console.log(res);
-      if (res.status === 200) {
-        setImages(res.data.splice(0, 3));
-      }
-    });
+    imageService
+      .getAll()
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          // setImages(res.data.splice(0, 3));
+          setImages(res.data);
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -67,7 +59,13 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSurveySubmitted]);
 
-  return (
+  return isLoading ? (
+    <>
+      <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+      <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+      <Skeleton variant="rounded" width={"100%"} height={60} animation="wave" />
+    </>
+  ) : (
     <Box sx={{ width: "100%" }}>
       <CommonSnackbar
         open={openSnack}

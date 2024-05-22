@@ -4,6 +4,7 @@ import { SURVEY_QUESTIONS } from "../../../constants";
 import {
   PersonImage,
   QuestionType,
+  SurveyAnswerPayload,
   SurveyAnswers,
 } from "../../../services/utilities/types";
 import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
@@ -24,20 +25,23 @@ const SurveySection: React.FC<SurveySectionProps> = ({
   setAnswers,
   isSurveySubmitted,
 }) => {
-  const handleChange = (selectedOption: string, field: string) => {
+  const handleChange = (
+    selectedOption: string,
+    field: keyof SurveyAnswerPayload
+  ) => {
     const updatedAnswers = [...answers];
     let updatedAnswer = { ...answers[index] };
     updatedAnswer = { ...updatedAnswer, [field]: selectedOption };
     updatedAnswers[index] = updatedAnswer;
-    console.log({ updatedAnswers });
+    // console.log({ updatedAnswers });
 
     setAnswers(updatedAnswers);
   };
 
   const doesItHaveErr = useCallback(
-    (val: string | string[]): boolean | undefined => {
+    (val: string | string[] | number): boolean | undefined => {
       if (isSurveySubmitted) {
-        if (val === "" || val === undefined || val.length === 0) return true;
+        if (val === "" || val === undefined) return true;
         return false;
       }
       return false;
@@ -57,7 +61,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
         "Indigenous/Native American/American Indian",
       ],
       type: "MCQ",
-      name: "pRace",
+      name: "race",
     },
   ]);
 
@@ -98,11 +102,11 @@ const SurveySection: React.FC<SurveySectionProps> = ({
         }
       />
 
-      {questions.map((question, index: number) => (
+      {questions.map((question, idx: number) => (
         <CommonSwitchComponent
           question={question.question}
           choices={question.options}
-          key={index}
+          key={idx}
           selectedOption={answers?.[index]?.[question.name] || ""}
           onOptionChange={(selectedOption) =>
             handleChange(selectedOption, question.name)

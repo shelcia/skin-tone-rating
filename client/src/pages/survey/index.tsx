@@ -5,7 +5,6 @@ import Sections from "./components/Sections";
 import { useSurveyAnswerContext } from "../../context/SurveyAnswerContext";
 import { useNavigate } from "react-router-dom";
 import { secondary } from "../../theme/themeColors";
-// import { surveyUserService } from "../../services/utilities/provider";
 import CommonSnackbar from "../../common/CommonSnackbar";
 
 const Survey = () => {
@@ -24,25 +23,31 @@ const Survey = () => {
   const handleNext = () => {
     if (activeStep === 0) {
       setIsIntroSubmitted(true);
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      // if (
-      //   surveyAnswers.age &&
-      //   surveyAnswers.education &&
-      //   surveyAnswers.gender &&
-      //   surveyAnswers.race
-      // ) {
-      //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      // } else {
-      //   setIsOpenSnack(true);
-      // }
+      // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      if (
+        surveyAnswers.age &&
+        surveyAnswers.education &&
+        surveyAnswers.gender &&
+        surveyAnswers.race
+      ) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      } else {
+        setIsOpenSnack(true);
+      }
     } else if (activeStep === 2) {
       setIsPractiseSubmitted(true);
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      // if (surveyAnswers.pLip) {
-      //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      // } else {
-      //   setIsOpenSnack(true);
-      // }
+      // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      if (
+        surveyAnswers.pLip &&
+        surveyAnswers.pNose &&
+        surveyAnswers.pOverall &&
+        surveyAnswers.pRace &&
+        surveyAnswers.pSkin
+      ) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      } else {
+        setIsOpenSnack(true);
+      }
     } else if (activeStep === 3) {
       setIsSurveySubmitted(true);
       if (
@@ -101,6 +106,8 @@ const Survey = () => {
       pNose: 0,
       pOverall: 0,
       answers: [],
+      email: "",
+      isInterested: "",
     });
     navigate("/success");
   };

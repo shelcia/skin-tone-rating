@@ -2,7 +2,11 @@ import React, { useCallback, useState } from "react";
 import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
 import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
 import { Box, Typography } from "@mui/material";
-import { QuestionType } from "../../../services/utilities/types";
+import {
+  QuestionType,
+  SurveyAnswerPayload,
+  SurveyAnswers,
+} from "../../../services/utilities/types";
 import CommonSkinType from "../../../common/CommonSkinType";
 
 interface PractiseProps {
@@ -12,12 +16,17 @@ interface PractiseProps {
 const Practise: React.FC<PractiseProps> = ({ isPractiseSubmitted }) => {
   const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
 
-  const handleChange = (selectedOption: string, name: string | undefined) => {
+  const handleChange = (
+    selectedOption: string,
+    name: keyof SurveyAnswerPayload
+  ) => {
     if (name) setSurveyAnswers({ ...surveyAnswers, [name]: selectedOption });
   };
 
   const doesItHaveErr = useCallback(
-    (val: string | number | undefined): boolean | undefined => {
+    (
+      val: string | number | undefined | SurveyAnswers[]
+    ): boolean | undefined => {
       if (isPractiseSubmitted) {
         if (val === "" || val === undefined) return true;
         return false;

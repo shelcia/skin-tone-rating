@@ -10,14 +10,15 @@ import {
   Typography,
 } from "@mui/material";
 import { error } from "../theme/themeColors";
+import { SurveyAnswers } from "../services/utilities/types";
 
 interface CommonSwitchComponentProps {
   question: string;
   choices: string[];
-  selectedOption?: string | number;
+  selectedOption?: string | number | SurveyAnswers[];
   onOptionChange?: (selectedOption: string) => void;
   additionalTextField?: boolean;
-  helperText?: string;
+  helperText?: string | SurveyAnswers[];
   isError?: boolean;
   horizontal?: boolean;
 }
@@ -60,7 +61,7 @@ const CommonSwitchComponent: React.FC<CommonSwitchComponentProps> = ({
         <RadioGroup
           aria-labelledby="radio-buttons-group-label"
           name="radio-buttons-group"
-          value={selectedOption}
+          value={typeof selectedOption === "string" ? selectedOption : ""}
           onChange={handleChange}
           sx={{ flexDirection: horizontal ? "row" : "column", fontWeight: 500 }}
         >
@@ -73,7 +74,9 @@ const CommonSwitchComponent: React.FC<CommonSwitchComponentProps> = ({
             />
           ))}
         </RadioGroup>
-        {isError && <FormHelperText>{helperText}</FormHelperText>}
+        {isError && typeof helperText === "string" && (
+          <FormHelperText>{helperText}</FormHelperText>
+        )}
         {additionalTextField && (
           <>
             <Typography sx={{ fontStyle: "italic", mb: 0.5 }}>

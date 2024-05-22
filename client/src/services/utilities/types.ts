@@ -8,7 +8,7 @@ export interface QuestionType {
   question: string;
   options: string[];
   type?: string;
-  name?: string;
+  name: keyof SurveyAnswerPayload;
   horizontal?: boolean;
 }
 
@@ -21,6 +21,7 @@ export interface RaceAnswer {
 }
 
 export interface SurveyAnswers {
+  [key: string]: string | number;
   skin: number;
   race: string;
   lip: number;
@@ -29,7 +30,7 @@ export interface SurveyAnswers {
 }
 
 export interface SurveyAnswerPayload {
-  // [key: string]: string | number | SurveyAnswers[] | undefined;
+  [key: string]: string | number | SurveyAnswers[];
   gender: string;
   age: number;
   education: string;
@@ -40,6 +41,8 @@ export interface SurveyAnswerPayload {
   pNose: number;
   pOverall: number;
   answers: SurveyAnswers[];
+  email: string;
+  isInterested: string;
 }
 
 export interface SurveyResponse {

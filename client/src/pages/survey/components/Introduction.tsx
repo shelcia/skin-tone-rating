@@ -3,13 +3,18 @@ import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
 import { FormControl, Skeleton, TextField, Typography } from "@mui/material";
 import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
 import { error } from "../../../theme/themeColors";
+import {
+  QuestionType,
+  SurveyAnswerPayload,
+  SurveyAnswers,
+} from "../../../services/utilities/types";
 
 interface IntroductionProps {
   isIntroSubmitted: boolean;
 }
 
 const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
-  const [questions] = useState([
+  const [questions] = useState<QuestionType[]>([
     {
       question: "What is your gender?",
       options: ["Man", "Women", "Other"],
@@ -56,12 +61,15 @@ const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
 
   const [isLoading] = useState(false);
 
-  const handleQuestionChange = (selectedOption: string, name: string) => {
+  const handleQuestionChange = (
+    selectedOption: string,
+    name: keyof SurveyAnswerPayload
+  ) => {
     setSurveyAnswers({ ...surveyAnswers, [name]: selectedOption });
   };
 
   const doesItHaveErr = (
-    val: string | number | undefined
+    val: string | number | undefined | SurveyAnswers[]
   ): boolean | undefined => {
     if (isIntroSubmitted) {
       if (val === "" || val === undefined) return true;

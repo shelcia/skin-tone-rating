@@ -41,6 +41,8 @@ export const SurveyAnswerProvider: React.FC<SurveyAnswerProviderProps> = ({
     pNose: 0,
     pOverall: 0,
     answers: [],
+    email: "",
+    isInterested: "",
   });
 
   const [isSurveyError, setIsSurveyError] = useState<boolean>(false);

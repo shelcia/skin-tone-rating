@@ -8,7 +8,6 @@ import {
   // ListItemText,
   Typography,
 } from "@mui/material";
-// import { FACTORS } from "../../../constants";
 // import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const Instructions: React.FC = () => {
@@ -58,12 +57,16 @@ const Instructions: React.FC = () => {
           </ListItem>
         ))}
       </List> */}
-      <Typography
+      {/* <Typography
         sx={{ fontSize: "1.25rem", fontWeight: 600, fontStyle: "italic" }}
       >
         On the following page, you'll have the chance to practice rating before
         we proceed to the actual study.
-      </Typography>
+      </Typography> */}
+      <Alert severity="success" variant="filled">
+        On the following page, you'll have the chance to practice rating before
+        we proceed to the actual study.
+      </Alert>
     </Box>
   );
 };

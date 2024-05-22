@@ -2,11 +2,18 @@ import React from "react";
 import { Container, Typography, Button, Grid } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { grey } from "@mui/material/colors";
+import BG from "../../assets/bg.jpeg";
 
 const LandingPage: React.FC = () => {
   return (
     <Container>
-      <Grid container spacing={3} justifyContent="center" alignItems="center">
+      <Grid
+        container
+        spacing={3}
+        justifyContent="center"
+        alignItems="center"
+        sx={{ my: 5 }}
+      >
         <Grid
           item
           xs={12}
@@ -41,9 +48,7 @@ const LandingPage: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <img
-            src={
-              "https://ik.imagekit.io/aifairness/Frame-2.webp?updatedAt=1709519629218"
-            }
+            src={BG}
             alt="bg-"
             style={{ width: "100%", objectFit: "contain" }}
             loading="eager"

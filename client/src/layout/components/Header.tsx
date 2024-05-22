@@ -14,6 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
+import Logo from "../../assets/logo.png";
 
 const drawerWidth = 240;
 // const navItems = ["Home", "About", "Contact"];
@@ -40,10 +41,8 @@ export default function DrawerAppBar() {
       <Typography variant="h6" sx={{ my: 2 }}>
         <NavLink to="/">
           <img
-            src={
-              "https://ik.imagekit.io/aifairness/ai-logo.webp?updatedAt=1710051459362"
-            }
-            alt="ai-logo"
+            src={Logo}
+            alt="st-logo"
             style={{ width: "100%", height: 200, objectFit: "contain" }}
           />
         </NavLink>
@@ -84,10 +83,8 @@ export default function DrawerAppBar() {
           >
             <NavLink to="/">
               <img
-                src={
-                  "https://ik.imagekit.io/aifairness/ai-logo.webp?updatedAt=1710051459362"
-                }
-                alt="ai-logo"
+                src={Logo}
+                alt="st-logo"
                 style={{ height: 30, objectFit: "contain" }}
               />
             </NavLink>

@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const fs = require("fs");
 const csv = require("csv-parser");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
@@ -8,7 +7,7 @@ const PORT = process.env.PORT || 4050;
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 const csvFilePath = "./db/players_data_cleaned-test.csv";
 let records = [];
@@ -111,6 +110,9 @@ app.post("/evaluate", (req, res) => {
       console.error(err);
       res.status(500).send("Failed to update CSV");
     });
+});
+app.get("/", (req, res) => {
+  res.send(`<h3>Hey! Skin Tone Backend is up !</h3>`);
 });
 
 // Start server and load CSV data

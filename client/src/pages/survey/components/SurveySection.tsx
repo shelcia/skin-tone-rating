@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { SURVEY_QUESTIONS } from "../../../constants";
 import {
   PersonImage,
@@ -9,6 +9,7 @@ import {
 } from "../../../services/utilities/types";
 import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
 import CommonSkinType from "../../../common/CommonSkinType";
+import Zoom from "react-medium-image-zoom";
 
 interface SurveySectionProps {
   image: PersonImage;
@@ -67,68 +68,78 @@ const SurveySection: React.FC<SurveySectionProps> = ({
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-      <Box>
-        <img
-          srcSet={image.photo_url}
-          src={image.photo_url}
-          alt={"image"}
-          loading="lazy"
-          style={{
-            width: 300,
-            height: "auto",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        />
-      </Box>
+      <Grid container>
+        <Grid item md={4} xs={12}>
+          <Box>
+            <Zoom>
+              <img
+                srcSet={image.photo_url}
+                src={image.photo_url}
+                alt={"image"}
+                loading="lazy"
+                style={{
+                  width: 300,
+                  height: "auto",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              />
+            </Zoom>
+          </Box>
+        </Grid>
+        <Grid item md={8} xs={12}>
+          <>
+            <CommonSkinType
+              question="Please select the shade that best matches the skin tone of the person in the picture above."
+              selectedOption={answers?.[index]?.skin || ""}
+              onOptionChange={(selectedOption) =>
+                handleChange(selectedOption, "skin")
+              }
+            />
 
-      <CommonSkinType
-        question="Please select the shade that best matches the skin tone of the person in the picture above."
-        selectedOption={answers?.[index]?.skin || ""}
-        onOptionChange={(selectedOption) =>
-          handleChange(selectedOption, "skin")
-        }
-      />
+            {questions.map((question, idx: number) => (
+              <CommonSwitchComponent
+                question={question.question}
+                choices={question.options}
+                key={idx}
+                selectedOption={answers?.[index]?.[question.name] || ""}
+                onOptionChange={(selectedOption) =>
+                  handleChange(selectedOption, question.name)
+                }
+                isError={doesItHaveErr(answers?.[index]?.[question.name])}
+              />
+            ))}
 
-      {questions.map((question, idx: number) => (
-        <CommonSwitchComponent
-          question={question.question}
-          choices={question.options}
-          key={idx}
-          selectedOption={answers?.[index]?.[question.name] || ""}
-          onOptionChange={(selectedOption) =>
-            handleChange(selectedOption, question.name)
-          }
-          isError={doesItHaveErr(answers?.[index]?.[question.name])}
-        />
-      ))}
+            <Typography
+              component="div"
+              sx={{
+                color: "#000",
+                fontWeight: 600,
+                fontSize: "1rem",
+                marginTop: 1,
+                my: 2,
+              }}
+            >
+              Please rate the person in the photo on a scale of 1 to 7 on the
+              following dimensions:
+            </Typography>
 
-      <Typography
-        component="span"
-        sx={{
-          color: "#000",
-          fontWeight: 600,
-          fontSize: "1rem",
-          marginTop: 1,
-        }}
-      >
-        Please rate the person in the photo on a scale of 1 to 7 on the
-        following dimensions:
-      </Typography>
-
-      {SURVEY_QUESTIONS.map((question, idx: number) => (
-        <CommonSwitchComponent
-          question={question.question}
-          choices={question.options}
-          key={idx}
-          selectedOption={answers?.[index]?.[question.name] || ""}
-          onOptionChange={(selectedOption) =>
-            handleChange(selectedOption, question.name)
-          }
-          isError={doesItHaveErr(answers?.[index]?.[question.name])}
-          horizontal={question.horizontal}
-        />
-      ))}
+            {SURVEY_QUESTIONS.map((question, idx: number) => (
+              <CommonSwitchComponent
+                question={question.question}
+                choices={question.options}
+                key={idx}
+                selectedOption={answers?.[index]?.[question.name] || ""}
+                onOptionChange={(selectedOption) =>
+                  handleChange(selectedOption, question.name)
+                }
+                isError={doesItHaveErr(answers?.[index]?.[question.name])}
+                horizontal={question.horizontal}
+              />
+            ))}
+          </>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

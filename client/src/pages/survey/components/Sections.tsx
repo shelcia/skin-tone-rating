@@ -61,7 +61,7 @@ const Sections: React.FC<SectionsProps> = ({
       {activeStep === 2 && (
         <SectionWrapper
           activeStep={activeStep}
-          topic="Practise"
+          topic=""
           handleNext={handleNext}
           handleBack={handleBack}
         >
@@ -73,7 +73,7 @@ const Sections: React.FC<SectionsProps> = ({
       {activeStep === 3 && (
         <SectionWrapper
           activeStep={activeStep}
-          topic="Survey"
+          topic=""
           handleNext={handleNext}
           handleBack={handleBack}
         >

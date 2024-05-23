@@ -8,7 +8,6 @@ import "./styles/style.css";
 import { customTheme } from "./theme";
 import { useRoutes } from "react-router-dom";
 import routes from "./routes";
-import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const allPages = useRoutes(routes);
@@ -21,12 +20,6 @@ const App = () => {
     direction: "ltr",
   });
 
-  const toasterOptions = {
-    style: {
-      fontWeight: 500,
-      fontFamily: "'Figtree Variable', sans-serif",
-    },
-  };
   return (
     <>
       <Box
@@ -35,7 +28,6 @@ const App = () => {
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={appTheme}>
             <CssBaseline />
-            <Toaster toastOptions={toasterOptions} />
             {allPages}
           </ThemeProvider>
         </StyledEngineProvider>

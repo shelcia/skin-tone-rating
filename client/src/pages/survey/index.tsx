@@ -121,12 +121,17 @@ const Survey = () => {
       <Grid
         item
         xs={12}
-        md={3}
+        md={12}
         sx={{ position: "sticky", top: 0, backgroundColor: secondary.main }}
       >
         <Steppers activeStep={activeStep} />
       </Grid>
-      <Grid item xs={12} md={9} sx={{ overflowY: "scroll", maxHeight: "80vh" }}>
+      <Grid
+        item
+        xs={12}
+        md={12}
+        sx={{ overflowY: "scroll", maxHeight: "80vh" }}
+      >
         <Sections
           activeStep={activeStep}
           handleNext={handleNext}

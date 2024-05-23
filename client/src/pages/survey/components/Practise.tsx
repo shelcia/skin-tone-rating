@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
 import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import {
   QuestionType,
   SurveyAnswerPayload,
@@ -9,6 +9,7 @@ import {
 } from "../../../services/utilities/types";
 import CommonSkinType from "../../../common/CommonSkinType";
 import { PSURVEY_QUESTIONS } from "../../../constants";
+import Zoom from "react-medium-image-zoom";
 
 interface PractiseProps {
   isPractiseSubmitted: boolean;
@@ -57,65 +58,78 @@ const Practise: React.FC<PractiseProps> = ({ isPractiseSubmitted }) => {
 
   return (
     <>
-      <Box sx={{ width: "100%" }}>
-        <img
-          srcSet={
-            "https://a.espncdn.com/i/headshots/college-football/players/full/4714009.png"
-          }
-          src={
-            "https://a.espncdn.com/i/headshots/college-football/players/full/4714009.png"
-          }
-          alt={"image"}
-          loading="lazy"
-          style={{
-            width: 300,
-            height: "auto",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        />
-      </Box>
-      <CommonSkinType
-        question="Please select the shade that best matches the skin tone of the person in the picture above."
-        selectedOption={surveyAnswers?.pSkin || ""}
-        onOptionChange={(selectedOption) =>
-          handleChange(selectedOption, "pSkin")
-        }
-      />
-
-      {questions.map((question, index: number) => (
-        <CommonSwitchComponent
-          question={question.question}
-          choices={question.options}
-          key={index}
-          selectedOption={surveyAnswers?.[question.name] || ""}
-          onOptionChange={(selectedOption) =>
-            handleChange(selectedOption, question.name)
-          }
-          isError={doesItHaveErr(surveyAnswers?.[question.name])}
-        />
-      ))}
-
-      <Typography
-        component="span"
-        sx={{ color: "#000", fontWeight: 600, fontSize: "1.15rem" }}
-      >
-        Please rate the person in the photo on a scale of 1 to 7 on the
-        following dimensions:
-      </Typography>
-      {practiseQuestions.map((question, index: number) => (
-        <CommonSwitchComponent
-          question={question.question}
-          choices={question.options}
-          key={index}
-          selectedOption={surveyAnswers?.[question.name] || ""}
-          onOptionChange={(selectedOption) =>
-            handleChange(selectedOption, question.name)
-          }
-          isError={doesItHaveErr(surveyAnswers?.[question.name])}
-          horizontal={question.horizontal}
-        />
-      ))}
+      <Grid container>
+        <Grid item md={4} xs={12}>
+          <Box sx={{ width: "100%" }}>
+            <Zoom>
+              <img
+                srcSet={
+                  "https://a.espncdn.com/i/headshots/college-football/players/full/4714009.png"
+                }
+                src={
+                  "https://a.espncdn.com/i/headshots/college-football/players/full/4714009.png"
+                }
+                alt={"image"}
+                loading="lazy"
+                style={{
+                  width: 300,
+                  height: "auto",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              />
+            </Zoom>
+          </Box>
+        </Grid>
+        <Grid item md={8} xs={12}>
+          <>
+            <CommonSkinType
+              question="Please select the shade that best matches the skin tone of the person in the picture above."
+              selectedOption={surveyAnswers?.pSkin || ""}
+              onOptionChange={(selectedOption) =>
+                handleChange(selectedOption, "pSkin")
+              }
+            />
+            {questions.map((question, index: number) => (
+              <CommonSwitchComponent
+                question={question.question}
+                choices={question.options}
+                key={index}
+                selectedOption={surveyAnswers?.[question.name] || ""}
+                onOptionChange={(selectedOption) =>
+                  handleChange(selectedOption, question.name)
+                }
+                isError={doesItHaveErr(surveyAnswers?.[question.name])}
+              />
+            ))}
+            <Typography
+              component="div"
+              sx={{
+                color: "#000",
+                fontWeight: 600,
+                fontSize: "1.15rem",
+                my: 2,
+              }}
+            >
+              Please rate the person in the photo on a scale of 1 to 7 on the
+              following dimensions:
+            </Typography>
+            {practiseQuestions.map((question, index: number) => (
+              <CommonSwitchComponent
+                question={question.question}
+                choices={question.options}
+                key={index}
+                selectedOption={surveyAnswers?.[question.name] || ""}
+                onOptionChange={(selectedOption) =>
+                  handleChange(selectedOption, question.name)
+                }
+                isError={doesItHaveErr(surveyAnswers?.[question.name])}
+                horizontal={question.horizontal}
+              />
+            ))}
+          </>
+        </Grid>
+      </Grid>
     </>
   );
 };

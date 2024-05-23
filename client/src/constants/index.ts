@@ -72,3 +72,46 @@ export const SURVEY_QUESTIONS: QuestionType[] = [
     name: "overall",
   },
 ];
+
+export const colors = [
+  {
+    color: "#f6ede4",
+    label: "A",
+  },
+  {
+    color: "#f3e7db",
+    label: "B",
+  },
+  {
+    color: "#f7ead0",
+    label: "C",
+  },
+  {
+    color: "#eadaba",
+    label: "D",
+  },
+  {
+    color: "#d7bd96",
+    label: "E",
+  },
+  {
+    color: "#a07e56",
+    label: "F",
+  },
+  {
+    color: "#825c43",
+    label: "G",
+  },
+  {
+    color: "#604134",
+    label: "H",
+  },
+  {
+    color: "#3a312a",
+    label: "I",
+  },
+  {
+    color: "#292420",
+    label: "J",
+  },
+];

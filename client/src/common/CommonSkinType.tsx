@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { error } from "../theme/themeColors";
+import { colors } from "../constants";
 
 interface CommonSwitchComponentProps {
   question: string;
@@ -34,19 +35,6 @@ const CommonSkinType: React.FC<CommonSwitchComponentProps> = ({
     if (onOptionChange)
       onOptionChange((event.target as HTMLInputElement).value);
   };
-
-  const colors = [
-    "#f6ede4",
-    "#f3e7db",
-    "#f7ead0",
-    "#eadaba",
-    "#d7bd96",
-    "#a07e56",
-    "#825c43",
-    "#604134",
-    "#3a312a",
-    "#292420",
-  ];
 
   return (
     <>
@@ -77,15 +65,18 @@ const CommonSkinType: React.FC<CommonSwitchComponentProps> = ({
             flexDirection: horizontal ? "row" : "column",
             fontWeight: 500,
             position: "relative",
+            gap: 0,
           }}
         >
-          {colors.map((choice) => (
+          {colors.map((color, idx: number) => (
             <FormControlLabel
-              key={choice}
-              value={choice}
+              key={color.color}
+              value={color.label}
               control={<Radio sx={{ zIndex: 2 }} />}
-              label={<Label color={choice} label={choice} />}
-              sx={{ position: "relative" }}
+              label={
+                <Label color={color.color} label={color.label} idx={idx} />
+              }
+              sx={{ position: "relative", mx: 0 }}
             />
           ))}
         </RadioGroup>
@@ -97,17 +88,31 @@ const CommonSkinType: React.FC<CommonSwitchComponentProps> = ({
 
 export default CommonSkinType;
 
-const Label = ({ color }: { color: string; label: string }) => (
+const Label = ({
+  color,
+  label,
+  idx,
+}: {
+  color: string;
+  label: string;
+  idx: number;
+}) => (
   <Box
     sx={{
       backgroundColor: color,
       height: 100,
-      width: 60,
-      //   borderRadius: 40,
+      width: 40,
       position: "absolute",
       left: 0,
       top: 0,
       zIndex: 0,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontWeight: 600,
+      color: idx > 4 ? "#fff" : "#000",
     }}
-  ></Box>
+  >
+    {label}
+  </Box>
 );

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { SURVEY_QUESTIONS } from "../../../constants";
 import {
   PersonImage,
@@ -67,18 +67,6 @@ const SurveySection: React.FC<SurveySectionProps> = ({
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-      <Typography
-        component="span"
-        sx={{
-          color: "#000",
-          fontWeight: 600,
-          fontSize: "1.15rem",
-          marginTop: 1,
-        }}
-      >
-        {index + 1} of 90:
-      </Typography>
-
       <Box>
         <img
           srcSet={image.photo_url}
@@ -141,7 +129,6 @@ const SurveySection: React.FC<SurveySectionProps> = ({
           horizontal={question.horizontal}
         />
       ))}
-      <Divider />
     </Box>
   );
 };

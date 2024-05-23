@@ -8,6 +8,7 @@ import {
   SurveyAnswers,
 } from "../../../services/utilities/types";
 import CommonSkinType from "../../../common/CommonSkinType";
+import { PSURVEY_QUESTIONS } from "../../../constants";
 
 interface PractiseProps {
   isPractiseSubmitted: boolean;
@@ -52,30 +53,7 @@ const Practise: React.FC<PractiseProps> = ({ isPractiseSubmitted }) => {
     },
   ]);
 
-  const [practiseQuestions] = useState([
-    {
-      question: "Lip Fullness",
-      options: ["1", "2", "3", "4", "5", "6", "7"],
-      type: "MCQ",
-      horizontal: true,
-      name: "pLip",
-    },
-    {
-      question: "Nose Shape",
-      options: ["1", "2", "3", "4", "5", "6", "7"],
-      type: "MCQ",
-      horizontal: true,
-      name: "pNose",
-    },
-    {
-      question:
-        "Provide an overall assessment if the person in the picture above exhibits as more Afrocentric or Eurocentric",
-      options: ["1 - Afrocentric", "2", "3", "4", "5", "6", "7 - Eurocentric"],
-      type: "MCQ",
-      horizontal: true,
-      name: "pOverall",
-    },
-  ]);
+  const [practiseQuestions] = useState(PSURVEY_QUESTIONS);
 
   return (
     <>

@@ -81,7 +81,11 @@ const Sections: React.FC<SectionsProps> = ({
             <Box
               sx={{ display: "flex", gap: 4, flexDirection: "column", mb: 4 }}
             >
-              <Survey isSurveySubmitted={isSurveySubmitted} />
+              <Survey
+                isSurveySubmitted={isSurveySubmitted}
+                handleSectionNext={handleNext}
+                handleSectionBack={handleBack}
+              />
             </Box>
           </>
         </SectionWrapper>
@@ -136,21 +140,25 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
         </Typography>
       )}
       <Box>{children}</Box>
-      {/* {activeStep !== 1 && ( */}
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          onClick={handleBack}
-          sx={{ mt: 1, mr: 1 }}
-          disabled={activeStep === 0}
-        >
-          Back
-        </Button>
-        <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
-          {activeStep === 4 ? "Submit" : "Continue"}
-          <ArrowForwardIcon sx={{ ml: 2, fontSize: "1rem" }} />
-        </Button>
-      </Box>
-      {/* )} */}
+      {activeStep !== 3 && (
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            onClick={handleBack}
+            sx={{ mt: 1, mr: 1 }}
+            disabled={activeStep === 0}
+          >
+            Back
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleNext}
+            sx={{ mt: 1, mr: 1 }}
+          >
+            {activeStep === 4 ? "Submit" : "Continue"}
+            <ArrowForwardIcon sx={{ ml: 2, fontSize: "1rem" }} />
+          </Button>
+        </Box>
+      )}
     </Paper>
   );
 };

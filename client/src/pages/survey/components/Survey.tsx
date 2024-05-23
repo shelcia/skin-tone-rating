@@ -5,19 +5,23 @@ import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
 import CommonSnackbar from "../../../common/CommonSnackbar";
 import SurveySection from "./SurveySection";
 import { imageService } from "../../../services/utilities/provider";
-import { Skeleton } from "@mui/material";
+import { Button, Divider, Skeleton } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 interface SurveyComponentProps {
   isSurveySubmitted: boolean;
+  handleSectionNext: () => void;
+  handleSectionBack: () => void;
 }
 
 const SurveyComponent: React.FC<SurveyComponentProps> = ({
   isSurveySubmitted,
+  handleSectionNext,
+  handleSectionBack,
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [openSnack, setIsOpenSnack] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [images, setImages] = useState<PersonImage[]>([]);
-
   const [answers, setAnswers] = useState<SurveyAnswers[]>([
     {
       skin: 0,
@@ -27,11 +31,16 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({
       overall: 0,
     },
   ]);
-  // const [contextAnswers, setContextAnswers] = useState([]);
-
   const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
+  const [activeStep, setActiveStep] = useState<number>(0);
 
-  const [openSnack, setIsOpenSnack] = useState(false);
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
 
   const fetchImages = async () => {
     imageService
@@ -72,16 +81,33 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({
         handleClose={() => setIsOpenSnack(false)}
       />
 
-      {images.map((image, index: number) => (
-        <SurveySection
-          key={image.id}
-          image={images[index]}
-          index={index}
-          answers={answers}
-          setAnswers={setAnswers}
-          isSurveySubmitted={isSurveySubmitted}
-        />
-      ))}
+      <SurveySection
+        image={images[activeStep]}
+        index={activeStep}
+        answers={answers}
+        setAnswers={setAnswers}
+        isSurveySubmitted={isSurveySubmitted}
+      />
+      <Divider sx={{ mt: 2 }} />
+
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          onClick={activeStep === 0 ? handleSectionBack : handleBack}
+          sx={{ mt: 1, mr: 1 }}
+        >
+          Back
+        </Button>
+        <Button
+          variant="contained"
+          onClick={
+            activeStep === images.length - 1 ? handleSectionNext : handleNext
+          }
+          sx={{ mt: 1, mr: 1 }}
+        >
+          {activeStep === images.length - 1 ? "Submit" : "Continue"}
+          <ArrowForwardIcon sx={{ ml: 2, fontSize: "1rem" }} />
+        </Button>
+      </Box>
     </Box>
   );
 };

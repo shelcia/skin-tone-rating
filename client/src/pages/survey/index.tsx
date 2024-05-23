@@ -9,16 +9,16 @@ import CommonSnackbar from "../../common/CommonSnackbar";
 
 const Survey = () => {
   const navigate = useNavigate();
-  const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
-  const [activeStep, setActiveStep] = useState<number>(0);
 
+  const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
+
+  const [activeStep, setActiveStep] = useState<number>(0);
   const [isIntroSubmitted, setIsIntroSubmitted] = useState<boolean>(false);
   const [isPractiseSubmitted, setIsPractiseSubmitted] =
     useState<boolean>(false);
   const [isSurveySubmitted, setIsSurveySubmitted] = useState<boolean>(false);
   const [isExitSubmitted, setIsExitSubmitted] = useState<boolean>(false);
-
-  const [openSnack, setIsOpenSnack] = React.useState(false);
+  const [openSnack, setIsOpenSnack] = React.useState<boolean>(false);
 
   const handleNext = () => {
     if (activeStep === 0) {
@@ -121,12 +121,12 @@ const Survey = () => {
       <Grid
         item
         xs={12}
-        md={4}
+        md={3}
         sx={{ position: "sticky", top: 0, backgroundColor: secondary.main }}
       >
         <Steppers activeStep={activeStep} />
       </Grid>
-      <Grid item xs={12} md={8} sx={{ overflowY: "scroll", maxHeight: "80vh" }}>
+      <Grid item xs={12} md={9} sx={{ overflowY: "scroll", maxHeight: "80vh" }}>
         <Sections
           activeStep={activeStep}
           handleNext={handleNext}

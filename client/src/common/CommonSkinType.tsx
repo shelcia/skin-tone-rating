@@ -3,7 +3,7 @@ import {
   Box,
   FormControl,
   FormControlLabel,
-  FormHelperText,
+  // FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,
@@ -31,6 +31,7 @@ const CommonSkinType: React.FC<CommonSwitchComponentProps> = ({
   isError = false,
   horizontal = true,
 }) => {
+  console.log({ helperText });
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onOptionChange)
       onOptionChange((event.target as HTMLInputElement).value);
@@ -80,7 +81,7 @@ const CommonSkinType: React.FC<CommonSwitchComponentProps> = ({
             />
           ))}
         </RadioGroup>
-        {isError && <FormHelperText>{helperText}</FormHelperText>}
+        {/* {isError && <FormHelperText>{helperText}</FormHelperText>} */}
       </FormControl>
     </>
   );

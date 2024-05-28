@@ -9,12 +9,17 @@ import {
   Typography,
 } from "@mui/material";
 import { COLORS } from "../../../constants";
+import { warning } from "../../../theme/themeColors";
 // import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const Instructions: React.FC = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <Alert severity="warning" variant="standard">
+      <Alert
+        severity="warning"
+        variant="filled"
+        sx={{ backgroundColor: warning.dark }}
+      >
         Please Read them carefully.
       </Alert>
       <Typography>
@@ -46,9 +51,10 @@ const Instructions: React.FC = () => {
                 height: 50,
                 width: 50,
                 borderRadius: 50,
+                boxShadow: "10px 10px 16px 0px rgba(0,0,0,0.05)",
               }}
             ></Box>
-            <Typography>{color.label}</Typography>
+            <Typography sx={{ fontWeight: 600 }}>{color.label}</Typography>
           </Box>
         ))}
       </Box>

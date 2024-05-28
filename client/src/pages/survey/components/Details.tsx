@@ -8,11 +8,16 @@ import Img3 from "../../../assets/people/3.png";
 import Imga from "../../../assets/people/a.png";
 import Imgb from "../../../assets/people/b.png";
 import Imgc from "../../../assets/people/c.png";
+import { primary, secondary, warning } from "../../../theme/themeColors";
 
 const Details: React.FC = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <Alert severity="warning" variant="standard">
+      <Alert
+        severity="warning"
+        variant="filled"
+        sx={{ backgroundColor: warning.dark }}
+      >
         Please Read them carefully.
       </Alert>
       <Typography>
@@ -58,6 +63,7 @@ const Details: React.FC = () => {
       <Box sx={{ display: "flex" }}>
         {[Imga, Imgb, Imgc].map((img, idx: number) => (
           <img
+            key={idx}
             src={img}
             alt={`person-${idx + 1}`}
             style={{ width: 200, height: 160, objectFit: "cover" }}
@@ -66,7 +72,11 @@ const Details: React.FC = () => {
         ))}
       </Box>
 
-      <Alert severity="success" variant="filled">
+      <Alert
+        // severity="success"
+        variant="filled"
+        sx={{ backgroundColor: primary.main, color: secondary.light }}
+      >
         On the following page, you'll have the chance to practice rating before
         we proceed to the actual study.
       </Alert>

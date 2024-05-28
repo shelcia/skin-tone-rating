@@ -42,7 +42,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
   const doesItHaveErr = useCallback(
     (val: string | string[] | number): boolean | undefined => {
       if (isSurveySubmitted) {
-        if (val === "" || val === undefined) return true;
+        if (val === "" || val === undefined || val === 0) return true;
         return false;
       }
       return false;
@@ -95,6 +95,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
               onOptionChange={(selectedOption) =>
                 handleChange(selectedOption, "skin")
               }
+              isError={doesItHaveErr(answers?.[index]?.["skin"])}
             />
 
             {questions.map((question, idx: number) => (

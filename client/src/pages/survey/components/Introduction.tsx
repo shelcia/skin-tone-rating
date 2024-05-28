@@ -72,7 +72,7 @@ const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
     val: string | number | undefined | SurveyAnswers[]
   ): boolean | undefined => {
     if (isIntroSubmitted) {
-      if (val === "" || val === undefined) return true;
+      if (val === "" || val === undefined || val === 0) return true;
       return false;
     }
     return false;

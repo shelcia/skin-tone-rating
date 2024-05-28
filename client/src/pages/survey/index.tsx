@@ -44,11 +44,7 @@ const Survey = () => {
       }
     } else if (activeStep === 4) {
       setIsSurveySubmitted(true);
-      if (
-        surveyAnswers.gender !== "" &&
-        surveyAnswers.gender &&
-        surveyAnswers.education
-      ) {
+      if (surveyAnswers.answers.length !== 0) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } else {
         setIsOpenSnack(true);

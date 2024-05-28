@@ -1,144 +1,3 @@
-// import React, { useCallback, useState } from "react";
-// import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
-// import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
-// import { Box, Grid, Typography } from "@mui/material";
-// import {
-//   QuestionType,
-//   SurveyAnswerPayload,
-//   SurveyAnswers,
-// } from "../../../services/utilities/types";
-// import CommonSkinType from "../../../common/CommonSkinType";
-// import { PSURVEY_QUESTIONS } from "../../../constants";
-// import Zoom from "react-medium-image-zoom";
-
-// interface PractiseProps {
-//   isPractiseSubmitted: boolean;
-// }
-
-// const Practise: React.FC<PractiseProps> = ({ isPractiseSubmitted }) => {
-//   const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
-
-//   const handleChange = (
-//     selectedOption: string,
-//     name: keyof SurveyAnswerPayload
-//   ) => {
-//     if (name) setSurveyAnswers({ ...surveyAnswers, [name]: selectedOption });
-//   };
-
-//   const doesItHaveErr = useCallback(
-//     (
-//       val: string | number | undefined | SurveyAnswers[]
-//     ): boolean | undefined => {
-//       if (isPractiseSubmitted) {
-//         if (val === "" || val === undefined) return true;
-//         return false;
-//       }
-//       return false;
-//     },
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//     [isPractiseSubmitted, surveyAnswers]
-//   );
-
-//   const [questions] = useState<QuestionType[]>([
-//     {
-//       question: "What race/ethnicity category would you place this person in",
-//       options: [
-//         "White/Caucasian",
-//         "Black/African American",
-//         "Hispanic/Latin@",
-//         "Asian/Pacific Islander",
-//         "Indigenous/Native American/American Indian",
-//       ],
-//       type: "MCQ",
-//       name: "pRace",
-//     },
-//   ]);
-
-//   const [practiseQuestions] = useState(PSURVEY_QUESTIONS);
-
-//   return (
-//     <>
-//       <Grid container>
-//         <Grid item md={4} xs={12}>
-//           <Box sx={{ width: "100%" }}>
-//             <Zoom>
-//               <img
-//                 srcSet={
-//                   "https://a.espncdn.com/i/headshots/college-football/players/full/4714009.png"
-//                 }
-//                 src={
-//                   "https://a.espncdn.com/i/headshots/college-football/players/full/4714009.png"
-//                 }
-//                 alt={"image"}
-//                 loading="lazy"
-//                 style={{
-//                   width: 300,
-//                   height: "auto",
-//                   marginLeft: "auto",
-//                   marginRight: "auto",
-//                 }}
-//               />
-//             </Zoom>
-//           </Box>
-//         </Grid>
-//         <Grid item md={8} xs={12}>
-//           <>
-//             <CommonSkinType
-//               question="Please select the shade that best matches the skin tone of the person in the picture above."
-//               selectedOption={surveyAnswers?.pSkin || ""}
-//               onOptionChange={(selectedOption) =>
-//                 handleChange(selectedOption, "pSkin")
-//               }
-//             />
-
-//             {questions.map((question, index: number) => (
-//               <CommonSwitchComponent
-//                 question={question.question}
-//                 choices={question.options}
-//                 key={index}
-//                 selectedOption={surveyAnswers?.[question.name] || ""}
-//                 onOptionChange={(selectedOption) =>
-//                   handleChange(selectedOption, question.name)
-//                 }
-//                 isError={doesItHaveErr(surveyAnswers?.[question.name])}
-//                 horizontal={true}
-//               />
-//             ))}
-
-//             <Typography
-//               component="div"
-//               sx={{
-//                 color: "#000",
-//                 fontWeight: 600,
-//                 fontSize: "1.15rem",
-//                 my: 2,
-//               }}
-//             >
-//               Please rate the person in the photo on a scale of 1 to 7 on the
-//               following dimensions:
-//             </Typography>
-//             {practiseQuestions.map((question, index: number) => (
-//               <CommonSwitchComponent
-//                 question={question.question}
-//                 choices={question.options}
-//                 key={index}
-//                 selectedOption={surveyAnswers?.[question.name] || ""}
-//                 onOptionChange={(selectedOption) =>
-//                   handleChange(selectedOption, question.name)
-//                 }
-//                 isError={doesItHaveErr(surveyAnswers?.[question.name])}
-//                 horizontal={question.horizontal}
-//               />
-//             ))}
-//           </>
-//         </Grid>
-//       </Grid>
-//     </>
-//   );
-// };
-
-// export default Practise;
-
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { SurveyAnswers } from "../../../services/utilities/types";
@@ -164,6 +23,7 @@ const Practice: React.FC<PracticeComponentProps> = ({
   handleSectionNext,
   handleSectionBack,
 }) => {
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [openSnack, setIsOpenSnack] = useState<boolean>(false);
   const [images] = useState<string[]>([Img1, Img2, Img3, Img4]);
   const [answers, setAnswers] = useState<SurveyAnswers[]>([
@@ -182,8 +42,21 @@ const Practice: React.FC<PracticeComponentProps> = ({
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const handleNext = (idx: number) => {
+    if (
+      answers?.[idx]?.skin &&
+      answers?.[idx]?.race !== "" &&
+      answers?.[idx]?.lip &&
+      answers?.[idx]?.nose &&
+      answers?.[idx]?.overall
+    ) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setIsOpenSnack(false);
+      setIsSubmitted(false);
+    } else {
+      setIsOpenSnack(true);
+      setIsSubmitted(true);
+    }
   };
 
   useEffect(() => {
@@ -207,7 +80,9 @@ const Practice: React.FC<PracticeComponentProps> = ({
         index={activeStep}
         answers={answers}
         setAnswers={setAnswers}
-        isSurveySubmitted={isPractiseSubmitted}
+        isSurveySubmitted={
+          activeStep === images.length - 1 ? isPractiseSubmitted : isSubmitted
+        }
       />
       <Divider sx={{ mt: 2 }} />
 
@@ -221,7 +96,9 @@ const Practice: React.FC<PracticeComponentProps> = ({
         <Button
           variant="contained"
           onClick={
-            activeStep === images.length - 1 ? handleSectionNext : handleNext
+            activeStep === images.length - 1
+              ? handleSectionNext
+              : () => handleNext(activeStep)
           }
           sx={{ mt: 1, mr: 1 }}
         >

@@ -14,10 +14,13 @@ const Steppers: React.FC<SteppersProps> = ({ activeStep }) => {
       label: "Background Information",
     },
     {
-      label: "Instructions",
+      label: "Instructions I",
     },
     {
-      label: "Practise",
+      label: "Instructions II",
+    },
+    {
+      label: "Practice",
     },
     {
       label: "Survey",

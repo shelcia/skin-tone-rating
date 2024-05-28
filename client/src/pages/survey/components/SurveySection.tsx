@@ -12,7 +12,7 @@ import CommonSkinType from "../../../common/CommonSkinType";
 import Zoom from "react-medium-image-zoom";
 
 interface SurveySectionProps {
-  image: PersonImage;
+  image: PersonImage | string;
   index: number;
   answers: SurveyAnswers[];
   setAnswers: React.Dispatch<React.SetStateAction<SurveyAnswers[]>>;
@@ -73,8 +73,8 @@ const SurveySection: React.FC<SurveySectionProps> = ({
           <Box>
             <Zoom>
               <img
-                srcSet={image.photo_url}
-                src={image.photo_url}
+                srcSet={typeof image === "string" ? image : image.photo_url}
+                src={typeof image === "string" ? image : image.photo_url}
                 alt={"image"}
                 loading="lazy"
                 style={{
@@ -107,6 +107,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
                   handleChange(selectedOption, question.name)
                 }
                 isError={doesItHaveErr(answers?.[index]?.[question.name])}
+                horizontal={true}
               />
             ))}
 

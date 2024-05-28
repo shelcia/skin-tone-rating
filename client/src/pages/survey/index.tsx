@@ -34,21 +34,15 @@ const Survey = () => {
       } else {
         setIsOpenSnack(true);
       }
-    } else if (activeStep === 2) {
+    } else if (activeStep === 3) {
       setIsPractiseSubmitted(true);
       // setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      if (
-        surveyAnswers.pLip &&
-        surveyAnswers.pNose &&
-        surveyAnswers.pOverall &&
-        surveyAnswers.pRace &&
-        surveyAnswers.pSkin
-      ) {
+      if (surveyAnswers.pratise.length !== 0) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } else {
         setIsOpenSnack(true);
       }
-    } else if (activeStep === 3) {
+    } else if (activeStep === 4) {
       setIsSurveySubmitted(true);
       if (
         surveyAnswers.gender !== "" &&
@@ -100,11 +94,7 @@ const Survey = () => {
       age: 0,
       education: "",
       race: "",
-      pSkin: 0,
-      pRace: "",
-      pLip: 0,
-      pNose: 0,
-      pOverall: 0,
+      pratise: [],
       answers: [],
       email: "",
       isInterested: "",

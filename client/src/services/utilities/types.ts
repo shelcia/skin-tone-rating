@@ -35,11 +35,12 @@ export interface SurveyAnswerPayload {
   age: number;
   education: string;
   race: string;
-  pSkin: number;
-  pRace: string;
-  pLip: number;
-  pNose: number;
-  pOverall: number;
+  // pSkin: number;
+  // pRace: string;
+  // pLip: number;
+  // pNose: number;
+  // pOverall: number;
+  pratise: SurveyAnswers[];
   answers: SurveyAnswers[];
   email: string;
   isInterested: string;

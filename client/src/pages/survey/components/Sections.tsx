@@ -6,6 +6,7 @@ import Exit from "./Exit";
 import Introduction from "./Introduction";
 import Instructions from "./Instructions";
 import Survey from "./Survey";
+import Details from "./Details";
 
 interface SectionsProps {
   activeStep: number;
@@ -45,7 +46,7 @@ const Sections: React.FC<SectionsProps> = ({
       {activeStep === 1 && (
         <SectionWrapper
           activeStep={activeStep}
-          topic="Instructions"
+          topic="Instructions - Part I"
           handleNext={handleNext}
           handleBack={handleBack}
         >
@@ -61,16 +62,32 @@ const Sections: React.FC<SectionsProps> = ({
       {activeStep === 2 && (
         <SectionWrapper
           activeStep={activeStep}
+          topic="Instructions - Part II"
+          handleNext={handleNext}
+          handleBack={handleBack}
+        >
+          <Box sx={{ display: "flex", gap: 4, flexDirection: "column", mb: 4 }}>
+            <Details />
+          </Box>
+        </SectionWrapper>
+      )}
+      {activeStep === 3 && (
+        <SectionWrapper
+          activeStep={activeStep}
           topic=""
           handleNext={handleNext}
           handleBack={handleBack}
         >
           <Box sx={{ display: "flex", gap: 4, flexDirection: "column", mb: 4 }}>
-            <Practise isPractiseSubmitted={isPractiseSubmitted} />
+            <Practise
+              isPractiseSubmitted={isPractiseSubmitted}
+              handleSectionNext={handleNext}
+              handleSectionBack={handleBack}
+            />
           </Box>
         </SectionWrapper>
       )}
-      {activeStep === 3 && (
+      {activeStep === 4 && (
         <SectionWrapper
           activeStep={activeStep}
           topic=""
@@ -90,7 +107,7 @@ const Sections: React.FC<SectionsProps> = ({
           </>
         </SectionWrapper>
       )}
-      {activeStep === 4 && (
+      {activeStep === 5 && (
         <SectionWrapper
           activeStep={activeStep}
           topic="Exit Questionairre"
@@ -140,7 +157,7 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
         </Typography>
       )}
       <Box>{children}</Box>
-      {activeStep !== 3 && (
+      {activeStep !== 3 && activeStep !== 4 && (
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             onClick={handleBack}
@@ -154,7 +171,7 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
             onClick={handleNext}
             sx={{ mt: 1, mr: 1 }}
           >
-            {activeStep === 4 ? "Submit" : "Continue"}
+            {activeStep === 5 ? "Submit" : "Continue"}
             <ArrowForwardIcon sx={{ ml: 2, fontSize: "1rem" }} />
           </Button>
         </Box>

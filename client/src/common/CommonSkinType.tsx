@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { error } from "../theme/themeColors";
-import { colors } from "../constants";
+import { COLORS } from "../constants";
 
 interface CommonSwitchComponentProps {
   question: string;
@@ -68,7 +68,7 @@ const CommonSkinType: React.FC<CommonSwitchComponentProps> = ({
             gap: 0,
           }}
         >
-          {colors.map((color, idx: number) => (
+          {COLORS.map((color, idx: number) => (
             <FormControlLabel
               key={color.color}
               value={color.label}

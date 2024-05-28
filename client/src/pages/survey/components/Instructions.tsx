@@ -8,6 +8,7 @@ import {
   // ListItemText,
   Typography,
 } from "@mui/material";
+import { COLORS } from "../../../constants";
 // import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const Instructions: React.FC = () => {
@@ -28,6 +29,29 @@ const Instructions: React.FC = () => {
         categories A to J. Please match the skin color of the individual in the
         photo to one of the orbs provided below to the best of your ability.
       </Typography>
+      <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+        {COLORS.map((color) => (
+          <Box
+            key={color.label}
+            sx={{
+              height: 50,
+              width: 50,
+              textAlign: "center",
+              mb: 4,
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: color.color,
+                height: 50,
+                width: 50,
+                borderRadius: 50,
+              }}
+            ></Box>
+            <Typography>{color.label}</Typography>
+          </Box>
+        ))}
+      </Box>
 
       <Typography>
         <b>Race</b> - The racial category options include White&#47;Caucasian,
@@ -63,10 +87,6 @@ const Instructions: React.FC = () => {
         On the following page, you'll have the chance to practice rating before
         we proceed to the actual study.
       </Typography> */}
-      <Alert severity="success" variant="filled">
-        On the following page, you'll have the chance to practice rating before
-        we proceed to the actual study.
-      </Alert>
     </Box>
   );
 };

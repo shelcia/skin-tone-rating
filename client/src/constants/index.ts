@@ -73,7 +73,7 @@ export const SURVEY_QUESTIONS: QuestionType[] = [
   },
 ];
 
-export const colors = [
+export const COLORS = [
   {
     color: "#f6ede4",
     label: "A",

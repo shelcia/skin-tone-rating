@@ -1,4 +1,8 @@
-import { QuestionType } from "../services/utilities/types";
+import {
+  LBLValMap,
+  QuestionType,
+  SurveyAnswerPayload,
+} from "../services/utilities/types";
 
 export const THEMES = {
   LIGHT: "light",
@@ -33,7 +37,15 @@ export const PSURVEY_QUESTIONS: QuestionType[] = [
   {
     question:
       "Provide an overall assessment if the person in the picture above exhibits as more Afrocentric or Eurocentric",
-    options: ["1 - Afrocentric", "2", "3", "4", "5", "6", "7 - Eurocentric"],
+    options: [
+      "1 - Very Eurocentric",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7 - Very Afrocentric",
+    ],
     type: "MCQ",
     horizontal: true,
     name: "pOverall",
@@ -66,7 +78,15 @@ export const SURVEY_QUESTIONS: QuestionType[] = [
   {
     question:
       "Provide an overall assessment if the person in the picture above exhibits as more Afrocentric or Eurocentric",
-    options: ["1 - Afrocentric", "2", "3", "4", "5", "6", "7 - Eurocentric"],
+    options: [
+      "1 - Very Eurocentric",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7 - Very Afrocentric",
+    ],
     type: "MCQ",
     horizontal: true,
     name: "overall",
@@ -115,3 +135,25 @@ export const COLORS = [
     label: "J",
   },
 ];
+
+export const REQ_PROPS: string[] = ["lip", "nose", "overall", "race", "skin"];
+
+export const NUM_PROPS: (keyof SurveyAnswerPayload)[] = [
+  "lip",
+  "nose",
+  "overall",
+];
+
+export const LBL_VAL_MAP: LBLValMap = {
+  "2": 2,
+  "3": 3,
+  "4": 4,
+  "5": 5,
+  "6": 6,
+  "1 - very thin": 1,
+  "7 - very full": 7,
+  "1 - very thin/narrow": 1,
+  "7 - very flat/broad": 7,
+  "1 - Very Eurocentric": 1,
+  "7 - Very Afrocentric": 7,
+};

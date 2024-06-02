@@ -28,7 +28,7 @@ const Practice: React.FC<PracticeComponentProps> = ({
   const [images] = useState<string[]>([Img1, Img2, Img3, Img4]);
   const [answers, setAnswers] = useState<SurveyAnswers[]>([
     {
-      skin: 0,
+      skin: "",
       race: "",
       lip: 0,
       nose: 0,
@@ -44,13 +44,20 @@ const Practice: React.FC<PracticeComponentProps> = ({
 
   const handleNext = (idx: number) => {
     if (
-      answers?.[idx]?.skin &&
+      answers?.[idx]?.skin !== "" &&
       answers?.[idx]?.race !== "" &&
       answers?.[idx]?.lip &&
       answers?.[idx]?.nose &&
       answers?.[idx]?.overall
     ) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      if (activeStep === images.length - 1) {
+        const updatedSurveyAnswers = { ...surveyAnswers };
+        updatedSurveyAnswers.pratise = answers;
+        setSurveyAnswers(updatedSurveyAnswers);
+        handleSectionNext();
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
       setIsOpenSnack(false);
       setIsSubmitted(false);
     } else {
@@ -80,9 +87,7 @@ const Practice: React.FC<PracticeComponentProps> = ({
         index={activeStep}
         answers={answers}
         setAnswers={setAnswers}
-        isSurveySubmitted={
-          activeStep === images.length - 1 ? isPractiseSubmitted : isSubmitted
-        }
+        isSurveySubmitted={isSubmitted}
       />
       <Divider sx={{ mt: 2 }} />
 
@@ -95,11 +100,7 @@ const Practice: React.FC<PracticeComponentProps> = ({
         </Button>
         <Button
           variant="contained"
-          onClick={
-            activeStep === images.length - 1
-              ? handleSectionNext
-              : () => handleNext(activeStep)
-          }
+          onClick={() => handleNext(activeStep)}
           sx={{ mt: 1, mr: 1 }}
         >
           {activeStep === images.length - 1 ? "Submit" : "Continue"}

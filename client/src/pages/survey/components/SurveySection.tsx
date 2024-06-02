@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import { SURVEY_QUESTIONS } from "../../../constants";
+import { NUM_PROPS, SURVEY_QUESTIONS } from "../../../constants";
 import {
   PersonImage,
   QuestionType,
@@ -137,6 +137,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
                 }
                 isError={doesItHaveErr(answers?.[index]?.[question.name])}
                 horizontal={question.horizontal}
+                mapping={NUM_PROPS.includes(question.name)}
               />
             ))}
           </>

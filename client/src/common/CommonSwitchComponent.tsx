@@ -10,7 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import { error } from "../theme/themeColors";
-import { SurveyAnswers } from "../services/utilities/types";
+import { LBLKeys, SurveyAnswers } from "../services/utilities/types";
+import { LBL_VAL_MAP } from "../constants";
 
 interface CommonSwitchComponentProps {
   question: string;
@@ -21,6 +22,7 @@ interface CommonSwitchComponentProps {
   helperText?: string | SurveyAnswers[];
   isError?: boolean;
   horizontal?: boolean;
+  mapping?: boolean;
 }
 
 const CommonSwitchComponent: React.FC<CommonSwitchComponentProps> = ({
@@ -32,11 +34,16 @@ const CommonSwitchComponent: React.FC<CommonSwitchComponentProps> = ({
   helperText = "Select one option at least",
   isError = false,
   horizontal = false,
+  mapping = false,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onOptionChange)
       onOptionChange((event.target as HTMLInputElement).value);
   };
+
+  function getLblValue(key: LBLKeys): number {
+    return LBL_VAL_MAP[key];
+  }
 
   return (
     <>
@@ -68,7 +75,7 @@ const CommonSwitchComponent: React.FC<CommonSwitchComponentProps> = ({
           {choices.map((choice) => (
             <FormControlLabel
               key={choice}
-              value={choice}
+              value={mapping ? getLblValue(choice) : choice}
               control={<Radio />}
               label={choice}
             />

@@ -20,7 +20,7 @@ const Instructions: React.FC = () => {
         variant="filled"
         sx={{ backgroundColor: warning.dark }}
       >
-        Please Read them carefully.
+        Please read the instructions carefully.
       </Alert>
       <Typography>
         In this study, you will assess an individual's photos by assigning a

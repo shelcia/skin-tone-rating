@@ -18,7 +18,7 @@ const Details: React.FC = () => {
         variant="filled"
         sx={{ backgroundColor: warning.dark }}
       >
-        Please Read them carefully.
+        Please read the instructions carefully.
       </Alert>
       <Typography>
         The examples below show individuals with a thin/narrow nose and thin
@@ -39,6 +39,7 @@ const Details: React.FC = () => {
       <Box sx={{ display: "flex" }}>
         {[Img1, Img2, Img3].map((img, idx: number) => (
           <img
+            key={idx}
             src={img}
             alt={`person-${idx + 1}`}
             style={{ width: 200, height: 160, objectFit: "cover" }}

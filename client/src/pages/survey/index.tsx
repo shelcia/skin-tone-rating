@@ -10,7 +10,7 @@ import CommonSnackbar from "../../common/CommonSnackbar";
 const Survey = () => {
   const navigate = useNavigate();
 
-  const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
+  const { surveyAnswers } = useSurveyAnswerContext();
 
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isIntroSubmitted, setIsIntroSubmitted] = useState<boolean>(false);
@@ -23,32 +23,36 @@ const Survey = () => {
   const handleNext = () => {
     if (activeStep === 0) {
       setIsIntroSubmitted(true);
-      // setActiveStep((prevActiveStep) => prevActiveStep + 1);
       if (
         surveyAnswers.age &&
         surveyAnswers.education &&
         surveyAnswers.gender &&
-        surveyAnswers.race
+        surveyAnswers.race &&
+        surveyAnswers.skin
       ) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } else {
         setIsOpenSnack(true);
       }
     } else if (activeStep === 3) {
+      setIsOpenSnack(false);
       setIsPractiseSubmitted(true);
-      // setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      if (surveyAnswers.pratise.length !== 0) {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      } else {
-        setIsOpenSnack(true);
-      }
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+      // if (surveyAnswers.pratise.length !== 0) {
+      //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      // } else {
+      //   setIsOpenSnack(true);
+      // }
     } else if (activeStep === 4) {
+      setIsOpenSnack(false);
       setIsSurveySubmitted(true);
-      if (surveyAnswers.answers.length !== 0) {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      } else {
-        setIsOpenSnack(true);
-      }
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      // if (surveyAnswers.answers.length !== 0) {
+      //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      // } else {
+      //   setIsOpenSnack(true);
+      // }
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
@@ -84,17 +88,17 @@ const Survey = () => {
     //     setActiveStep(0);
     //   });
 
-    // console.log(surveyAnswers);
-    setSurveyAnswers({
-      gender: "",
-      age: 0,
-      education: "",
-      race: "",
-      pratise: [],
-      answers: [],
-      email: "",
-      isInterested: "",
-    });
+    console.log({ surveyAnswers });
+    // setSurveyAnswers({
+    //   gender: "",
+    //   age: 0,
+    //   education: "",
+    //   race: "",
+    //   pratise: [],
+    //   answers: [],
+    //   email: "",
+    //   isInterested: "",
+    // });
     navigate("/success");
   };
 

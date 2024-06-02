@@ -8,6 +8,7 @@ import {
   SurveyAnswerPayload,
   SurveyAnswers,
 } from "../../../services/utilities/types";
+import CommonSkinType from "../../../common/CommonSkinType";
 
 interface IntroductionProps {
   isIntroSubmitted: boolean;
@@ -121,6 +122,14 @@ const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
           </FormControl>
         )
       )}
+      <CommonSkinType
+        question="From the options listed below, please select the shade that best matches your skin tone:"
+        selectedOption={surveyAnswers?.skin || ""}
+        onOptionChange={(selectedOption) =>
+          handleQuestionChange(selectedOption, "skin")
+        }
+        isError={doesItHaveErr(surveyAnswers?.["skin"])}
+      />
     </>
   );
 };

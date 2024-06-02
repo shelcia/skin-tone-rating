@@ -13,7 +13,7 @@ export interface QuestionType {
 }
 
 export interface RaceAnswer {
-  skin: number;
+  skin: string;
   race: string;
   lip: number;
   nose: number;
@@ -22,7 +22,7 @@ export interface RaceAnswer {
 
 export interface SurveyAnswers {
   [key: string]: string | number;
-  skin: number;
+  skin: string;
   race: string;
   lip: number;
   nose: number;
@@ -35,6 +35,7 @@ export interface SurveyAnswerPayload {
   age: number;
   education: string;
   race: string;
+  skin: string;
   // pSkin: number;
   // pRace: string;
   // pLip: number;
@@ -67,3 +68,21 @@ export interface ApiResponse {
   status: string;
   message: string;
 }
+
+export type LBLKeys =
+  | "2"
+  | "3"
+  | "4"
+  | "5"
+  | "6"
+  | "1 - very thin"
+  | "7 - very full"
+  | "1 - very thin/narrow"
+  | "7 - very flat/broad"
+  | "1 - Very Eurocentric"
+  | "7 - Very Afrocentric"
+  | string;
+
+export type LBLValMap = {
+  [key in LBLKeys]: number;
+};

@@ -34,6 +34,7 @@ export const SurveyAnswerProvider: React.FC<SurveyAnswerProviderProps> = ({
     gender: "",
     age: 0,
     education: "",
+    skin: "",
     race: "",
     pratise: [],
     answers: [],

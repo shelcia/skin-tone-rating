@@ -27,11 +27,11 @@ const CommonSkinType: React.FC<CommonSwitchComponentProps> = ({
   question,
   selectedOption,
   onOptionChange,
-  helperText = "Select one option at least",
+  // helperText = "Select one option at least",
   isError = false,
   horizontal = true,
 }) => {
-  console.log({ helperText });
+  // console.log({ helperText });
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onOptionChange)
       onOptionChange((event.target as HTMLInputElement).value);

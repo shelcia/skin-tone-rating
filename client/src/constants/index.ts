@@ -1,7 +1,7 @@
 import {
   LBLValMap,
   QuestionType,
-  SurveyAnswerPayload,
+  SurveyAnswerResponse,
 } from "../services/utilities/types";
 
 export const THEMES = {
@@ -138,7 +138,7 @@ export const COLORS = [
 
 export const REQ_PROPS: string[] = ["lip", "nose", "overall", "race", "skin"];
 
-export const NUM_PROPS: (keyof SurveyAnswerPayload)[] = [
+export const NUM_PROPS: (keyof SurveyAnswerResponse)[] = [
   "lip",
   "nose",
   "overall",

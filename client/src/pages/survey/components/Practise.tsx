@@ -28,6 +28,7 @@ const Practice: React.FC<PracticeComponentProps> = ({
   const [images] = useState<string[]>([Img1, Img2, Img3, Img4]);
   const [answers, setAnswers] = useState<SurveyAnswers[]>([
     {
+      id: "",
       skin: "",
       race: "",
       lip: 0,

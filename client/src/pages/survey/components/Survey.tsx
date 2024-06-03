@@ -25,6 +25,7 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({
   const [images, setImages] = useState<PersonImage[]>([]);
   const [answers, setAnswers] = useState<SurveyAnswers[]>([
     {
+      id: "",
       skin: "",
       race: "",
       lip: 0,
@@ -40,6 +41,7 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({
   };
 
   const handleNext = (idx: number) => {
+    answers[idx].id = images[idx].id;
     if (
       answers?.[idx]?.skin &&
       answers?.[idx]?.race !== "" &&

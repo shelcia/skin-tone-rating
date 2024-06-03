@@ -4,7 +4,7 @@ import { NUM_PROPS, SURVEY_QUESTIONS } from "../../../constants";
 import {
   PersonImage,
   QuestionType,
-  SurveyAnswerPayload,
+  SurveyAnswerResponse,
   SurveyAnswers,
 } from "../../../services/utilities/types";
 import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
@@ -28,7 +28,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
 }) => {
   const handleChange = (
     selectedOption: string,
-    field: keyof SurveyAnswerPayload
+    field: keyof SurveyAnswerResponse
   ) => {
     const updatedAnswers = [...answers];
     let updatedAnswer = { ...answers[index] };

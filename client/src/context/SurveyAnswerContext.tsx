@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { SurveyAnswerPayload } from "../services/utilities/types";
+import { SurveyAnswerResponse } from "../services/utilities/types";
 
 interface SurveyAnswerContextProps {
-  surveyAnswers: SurveyAnswerPayload;
-  setSurveyAnswers: React.Dispatch<React.SetStateAction<SurveyAnswerPayload>>;
+  surveyAnswers: SurveyAnswerResponse;
+  setSurveyAnswers: React.Dispatch<React.SetStateAction<SurveyAnswerResponse>>;
   isSurveyError: boolean;
   setIsSurveyError: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -30,7 +30,7 @@ interface SurveyAnswerProviderProps {
 export const SurveyAnswerProvider: React.FC<SurveyAnswerProviderProps> = ({
   children,
 }) => {
-  const [surveyAnswers, setSurveyAnswers] = useState<SurveyAnswerPayload>({
+  const [surveyAnswers, setSurveyAnswers] = useState<SurveyAnswerResponse>({
     gender: "",
     age: 0,
     education: "",

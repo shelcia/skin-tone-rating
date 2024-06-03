@@ -5,6 +5,7 @@ import {
   PersonImage,
   PersonImageResponse,
   SurveyAnswerPayload,
+  SurveyAnswerResponse,
   SurveyResponse,
 } from "./types";
 
@@ -117,5 +118,10 @@ export const imageService = new ApiService<PersonImageResponse, PersonImage>(
 
 export const surveyUserService = new ApiService<
   SurveyResponse,
-  SurveyAnswerPayload
+  SurveyAnswerResponse
 >("surveyUser");
+
+export const surveyEditService = new ApiService<
+  SurveyResponse,
+  SurveyAnswerPayload
+>("evaluate");

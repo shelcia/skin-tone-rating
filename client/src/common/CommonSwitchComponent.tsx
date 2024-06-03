@@ -41,9 +41,9 @@ const CommonSwitchComponent: React.FC<CommonSwitchComponentProps> = ({
       onOptionChange((event.target as HTMLInputElement).value);
   };
 
-  function getLblValue(key: LBLKeys): number {
+  const getLblValue = (key: LBLKeys): number => {
     return LBL_VAL_MAP[key];
-  }
+  };
 
   return (
     <>

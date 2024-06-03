@@ -8,11 +8,12 @@ export interface QuestionType {
   question: string;
   options: string[];
   type?: string;
-  name: keyof SurveyAnswerPayload;
+  name: keyof SurveyAnswerResponse;
   horizontal?: boolean;
 }
 
 export interface RaceAnswer {
+  id: string;
   skin: string;
   race: string;
   lip: number;
@@ -22,6 +23,7 @@ export interface RaceAnswer {
 
 export interface SurveyAnswers {
   [key: string]: string | number;
+  id: string;
   skin: string;
   race: string;
   lip: number;
@@ -29,7 +31,7 @@ export interface SurveyAnswers {
   overall: number;
 }
 
-export interface SurveyAnswerPayload {
+export interface SurveyAnswerResponse {
   [key: string]: string | number | SurveyAnswers[];
   gender: string;
   age: number;
@@ -49,7 +51,18 @@ export interface SurveyAnswerPayload {
 
 export interface SurveyResponse {
   data: number;
-  message: SurveyAnswerPayload[];
+  message: SurveyAnswerResponse[];
+}
+
+export interface SurveyAnswerPayload {
+  id: string;
+  evaluation: {
+    st: string;
+    race: string;
+    featuresa: string | number;
+    featuresb: string | number;
+    featuresc: string | number;
+  };
 }
 
 export interface PersonImage {

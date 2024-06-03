@@ -10,11 +10,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// const csvFilePath = "./db/players_data_cleaned-test.csv";
+// const csvFilePath = path.join(
+//   __dirname,
+//   "../server/db/players_data_cleaned-test-2.csv"
+// );
+
 const csvFilePath = path.join(
   __dirname,
   "../server/db/players_data_cleaned-test.csv"
-); // Adjust path as necessary
+);
+
 let records = [];
 
 // Load CSV data into memory
@@ -76,9 +81,10 @@ app.get("/images", (req, res) => {
 // Endpoint to submit evaluation
 app.post("/evaluate", (req, res) => {
   const { id, evaluation } = req.body;
+  console.log({ evaluation });
   const record = records.find((r) => r.id === id);
   if (!record) {
-    return res.status(404).send("Record not found");
+    return res.status(404).json({ status: 404, message: "Record not found" });
   }
 
   // Find the next available rater slot
@@ -90,7 +96,9 @@ app.post("/evaluate", (req, res) => {
     }
   }
   if (!raterSlot) {
-    return res.status(400).send("Evaluation limit reached");
+    return res
+      .status(400)
+      .json({ status: 400, message: "Evaluation limit reached" });
   }
 
   // Add evaluation data to the record
@@ -103,17 +111,21 @@ app.post("/evaluate", (req, res) => {
   // Update the CSV file
   const csvWriter = createCsvWriter({
     path: csvFilePath,
-    header: Object.keys(records[0]),
+    // header: Object.keys(records[0]),
+    header: Object.keys(records[0]).map((header) => ({
+      id: header,
+      title: header,
+    })),
   });
 
   csvWriter
     .writeRecords(records)
     .then(() => {
-      res.send("Evaluation recorded");
+      res.status(200).json({ status: 200, message: "Evaluation recorded" });
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Failed to update CSV");
+      res.status(500).json({ status: 500, message: "Failed to update CSV" });
     });
 });
 app.get("/", (req, res) => {

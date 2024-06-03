@@ -6,11 +6,16 @@ import { useSurveyAnswerContext } from "../../context/SurveyAnswerContext";
 import { useNavigate } from "react-router-dom";
 import { secondary } from "../../theme/themeColors";
 import CommonSnackbar from "../../common/CommonSnackbar";
+import { surveyEditService } from "../../services/utilities/provider";
+import {
+  RaceAnswer,
+  SurveyAnswerPayload,
+} from "../../services/utilities/types";
 
 const Survey = () => {
   const navigate = useNavigate();
 
-  const { surveyAnswers } = useSurveyAnswerContext();
+  const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
 
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isIntroSubmitted, setIsIntroSubmitted] = useState<boolean>(false);
@@ -78,27 +83,39 @@ const Survey = () => {
   };
 
   const sendAnswer = async () => {
-    // await surveyUserService
-    //   .post(surveyAnswers)
-    //   .then((res) => {
-    //     console.log(res);
-    //     navigate("/success");
-    //   })
-    //   .finally(() => {
-    //     setActiveStep(0);
-    //   });
-
+    surveyAnswers.answers.map(async (answer: RaceAnswer) => {
+      const body: SurveyAnswerPayload = {
+        id: answer.id,
+        evaluation: {
+          st: answer.skin,
+          race: answer.race,
+          featuresa: answer.lip,
+          featuresb: answer.nose,
+          featuresc: answer.overall,
+        },
+      };
+      await surveyEditService
+        .post(body)
+        .then((res) => {
+          console.log(res);
+          navigate("/success");
+        })
+        .finally(() => {
+          setActiveStep(0);
+        });
+    });
     console.log({ surveyAnswers });
-    // setSurveyAnswers({
-    //   gender: "",
-    //   age: 0,
-    //   education: "",
-    //   race: "",
-    //   pratise: [],
-    //   answers: [],
-    //   email: "",
-    //   isInterested: "",
-    // });
+    setSurveyAnswers({
+      gender: "",
+      age: 0,
+      skin: "",
+      education: "",
+      race: "",
+      pratise: [],
+      answers: [],
+      email: "",
+      isInterested: "",
+    });
     navigate("/success");
   };
 

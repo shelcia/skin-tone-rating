@@ -5,7 +5,7 @@ import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
 import { error } from "../../../theme/themeColors";
 import {
   QuestionType,
-  SurveyAnswerPayload,
+  SurveyAnswerResponse,
   SurveyAnswers,
 } from "../../../services/utilities/types";
 import CommonSkinType from "../../../common/CommonSkinType";
@@ -64,7 +64,7 @@ const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
 
   const handleQuestionChange = (
     selectedOption: string,
-    name: keyof SurveyAnswerPayload
+    name: keyof SurveyAnswerResponse
   ) => {
     setSurveyAnswers({ ...surveyAnswers, [name]: selectedOption });
   };

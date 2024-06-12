@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { Dispatch, ReactElement, SetStateAction } from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Practise from "./Practise";
@@ -7,16 +7,20 @@ import Introduction from "./Introduction";
 import Instructions from "./Instructions";
 import Survey from "./Survey";
 import Details from "./Details";
+import Consent from "./Consent";
 
 interface SectionsProps {
   activeStep: number;
   handleNext: () => void;
   handleBack: () => void;
   handleReset: () => void;
+  isConsentSubmitted: boolean;
   isIntroSubmitted: boolean;
   isPractiseSubmitted: boolean;
   isSurveySubmitted: boolean;
   isExitSubmitted: boolean;
+  consentAnswer: string;
+  setConsentAnswer: Dispatch<SetStateAction<string>>;
 }
 
 const Sections: React.FC<SectionsProps> = ({
@@ -24,14 +28,33 @@ const Sections: React.FC<SectionsProps> = ({
   handleNext,
   handleBack,
   handleReset,
+  isConsentSubmitted,
   isIntroSubmitted,
   isPractiseSubmitted,
   isSurveySubmitted,
   isExitSubmitted,
+  consentAnswer,
+  setConsentAnswer,
 }) => {
   return (
     <>
       {activeStep === 0 && (
+        <SectionWrapper
+          activeStep={activeStep}
+          topic=""
+          handleNext={handleNext}
+          handleBack={handleBack}
+        >
+          <Box sx={{ display: "flex", gap: 4, flexDirection: "column", mb: 4 }}>
+            <Consent
+              isConsentSubmitted={isConsentSubmitted}
+              consentAnswer={consentAnswer}
+              setConsentAnswer={setConsentAnswer}
+            />
+          </Box>
+        </SectionWrapper>
+      )}
+      {activeStep === 1 && (
         <SectionWrapper
           activeStep={activeStep}
           topic="Background Information"
@@ -43,7 +66,7 @@ const Sections: React.FC<SectionsProps> = ({
           </Box>
         </SectionWrapper>
       )}
-      {activeStep === 1 && (
+      {activeStep === 2 && (
         <SectionWrapper
           activeStep={activeStep}
           topic="Instructions - Part I"
@@ -59,7 +82,7 @@ const Sections: React.FC<SectionsProps> = ({
           </>
         </SectionWrapper>
       )}
-      {activeStep === 2 && (
+      {activeStep === 3 && (
         <SectionWrapper
           activeStep={activeStep}
           topic="Instructions - Part II"
@@ -71,7 +94,7 @@ const Sections: React.FC<SectionsProps> = ({
           </Box>
         </SectionWrapper>
       )}
-      {activeStep === 3 && (
+      {activeStep === 4 && (
         <SectionWrapper
           activeStep={activeStep}
           topic=""
@@ -87,7 +110,7 @@ const Sections: React.FC<SectionsProps> = ({
           </Box>
         </SectionWrapper>
       )}
-      {activeStep === 4 && (
+      {activeStep === 5 && (
         <SectionWrapper
           activeStep={activeStep}
           topic=""
@@ -107,10 +130,10 @@ const Sections: React.FC<SectionsProps> = ({
           </>
         </SectionWrapper>
       )}
-      {activeStep === 5 && (
+      {activeStep === 6 && (
         <SectionWrapper
           activeStep={activeStep}
-          topic="Exit Questionairre"
+          topic="Exit Survey"
           handleNext={handleReset}
           handleBack={handleBack}
         >
@@ -157,7 +180,7 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
         </Typography>
       )}
       <Box>{children}</Box>
-      {activeStep !== 3 && activeStep !== 4 && (
+      {activeStep !== 4 && activeStep !== 5 && (
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             onClick={handleBack}

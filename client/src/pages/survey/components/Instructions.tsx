@@ -69,12 +69,12 @@ const Instructions: React.FC = () => {
       </Typography>
 
       <Typography>
-        <b>Facial Features</b> - We define Afrocentric features as those
-        characterized by very full lips and a broad or flat nose shape, while
-        Eurocentric features are described as thin lips and a more narrow nose.
-        You will rate the individual in the photo on a scale of 1-7, with one
-        (1) indicating Very Eurocentric and seven (7) indicating very
-        Afrocentric.
+        <b>Eurocentric and Afrocentric Facial Features</b> - We define
+        Afrocentric features as those characterized by very full lips and a
+        broad or flat nose shape, while Eurocentric features are described as
+        thin lips and a more narrow nose. You will rate the individual in the
+        photo on a scale of 1-7, with one (1) indicating Very Eurocentric and
+        seven (7) indicating very Afrocentric.
       </Typography>
       {/* 
       <List>

@@ -1,43 +1,44 @@
-import { TextField, Typography } from "@mui/material";
-import React, { useCallback } from "react";
-import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
-import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
+import React from "react";
+import { Typography } from "@mui/material";
+// import CommonSwitchComponent from "../../../common/CommonSwitchComponent";
+// import { useSurveyAnswerContext } from "../../../context/SurveyAnswerContext";
 
 interface ExitProps {
   isExitSubmitted: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Exit: React.FC<ExitProps> = ({ isExitSubmitted }) => {
-  const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
+  // const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
 
-  const handleExitChange = (selectedOption: string, field: string) => {
-    const updatedExitAnswers = { ...surveyAnswers };
-    updatedExitAnswers[field] = selectedOption;
-    setSurveyAnswers(updatedExitAnswers);
-  };
+  // const handleExitChange = (selectedOption: string, field: string) => {
+  //   const updatedExitAnswers = { ...surveyAnswers };
+  //   updatedExitAnswers[field] = selectedOption;
+  //   setSurveyAnswers(updatedExitAnswers);
+  // };
 
-  const doesItHaveErr = useCallback(
-    (val: string): boolean | undefined => {
-      if (isExitSubmitted) {
-        if (val === "" || val === undefined) return true;
-        return false;
-      }
-      return false;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isExitSubmitted]
-  );
+  // const doesItHaveErr = useCallback(
+  //   (val: string): boolean | undefined => {
+  //     if (isExitSubmitted) {
+  //       if (val === "" || val === undefined) return true;
+  //       return false;
+  //     }
+  //     return false;
+  //   },
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [isExitSubmitted]
+  // );
 
   return (
     <>
-      <Typography>Thank you for participating!</Typography>
       <Typography>
-        Our research team is interested in hearing more about your experiences.
-        Would you be interested in participating in a comprehensive interview on
-        algorithmic bias? If you're up for it, please share your email address,
-        and if chosen, we'll compensate you for your time.
+        Thank you for your input! Please follow the link below in order to
+        capture your participation in this study.
       </Typography>
-      <CommonSwitchComponent
+      {/* <Typography>
+        https://app.prolific.com/submissions/complete?cc=CQ2CR1H1
+      </Typography> */}
+      {/* <CommonSwitchComponent
         question=""
         choices={[
           "Yes, I would like to participate",
@@ -62,7 +63,7 @@ const Exit: React.FC<ExitProps> = ({ isExitSubmitted }) => {
             error={doesItHaveErr(surveyAnswers?.email)}
           />
         </>
-      )}
+      )} */}
     </>
   );
 };

@@ -17,6 +17,12 @@ interface IntroductionProps {
 const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
   const [questions] = useState<QuestionType[]>([
     {
+      question: "What is your name?",
+      options: [],
+      type: "TEXT",
+      name: "name",
+    },
+    {
       question: "What is your gender?",
       options: ["Man", "Women", "Other"],
       type: "MCQ",
@@ -30,7 +36,7 @@ const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
     },
     {
       question:
-        "Which of the following best describes the highest level of education you have completed? (Carnegie Melon borrowed)",
+        "Which of the following best describes the highest level of education you have completed?",
       options: [
         "Some high school",
         "High school diploma/GED (General Education Diploma)",
@@ -111,7 +117,7 @@ const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
               {question.question}
             </Typography>
             <TextField
-              type="number"
+              type={question.name === "age" ? "number" : "text"}
               size="small"
               value={surveyAnswers?.[question.name]}
               onChange={(e) =>

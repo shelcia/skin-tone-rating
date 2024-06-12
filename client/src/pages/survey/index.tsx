@@ -16,8 +16,10 @@ const Survey = () => {
   const navigate = useNavigate();
 
   const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
+  const [consentAnswer, setConsentAnswer] = useState("");
 
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [isConsentSubmitted, setIsConsentSubmitted] = useState<boolean>(false);
   const [isIntroSubmitted, setIsIntroSubmitted] = useState<boolean>(false);
   const [isPractiseSubmitted, setIsPractiseSubmitted] =
     useState<boolean>(false);
@@ -27,6 +29,17 @@ const Survey = () => {
 
   const handleNext = () => {
     if (activeStep === 0) {
+      setIsConsentSubmitted(true);
+      if (consentAnswer !== "") {
+        if (consentAnswer === "I do not consent to participate") {
+          setIsOpenSnack(true);
+        } else {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+      } else {
+        setIsOpenSnack(true);
+      }
+    } else if (activeStep === 1) {
       setIsIntroSubmitted(true);
       if (
         surveyAnswers.age &&
@@ -39,7 +52,7 @@ const Survey = () => {
       } else {
         setIsOpenSnack(true);
       }
-    } else if (activeStep === 3) {
+    } else if (activeStep === 4) {
       setIsOpenSnack(false);
       setIsPractiseSubmitted(true);
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -49,7 +62,7 @@ const Survey = () => {
       // } else {
       //   setIsOpenSnack(true);
       // }
-    } else if (activeStep === 4) {
+    } else if (activeStep === 5) {
       setIsOpenSnack(false);
       setIsSurveySubmitted(true);
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -106,6 +119,7 @@ const Survey = () => {
     });
     console.log({ surveyAnswers });
     setSurveyAnswers({
+      name: "",
       gender: "",
       age: 0,
       skin: "",
@@ -124,6 +138,11 @@ const Survey = () => {
       <CommonSnackbar
         open={openSnack}
         handleClose={() => setIsOpenSnack(false)}
+        helperText={
+          consentAnswer === "I do not consent to participate"
+            ? "Please accept consent to proceed"
+            : "Please fill in all the fields !"
+        }
       />
       <Grid
         item
@@ -144,10 +163,13 @@ const Survey = () => {
           handleNext={handleNext}
           handleBack={handleBack}
           handleReset={handleReset}
+          isConsentSubmitted={isConsentSubmitted}
           isIntroSubmitted={isIntroSubmitted}
           isPractiseSubmitted={isPractiseSubmitted}
           isSurveySubmitted={isSurveySubmitted}
           isExitSubmitted={isExitSubmitted}
+          consentAnswer={consentAnswer}
+          setConsentAnswer={setConsentAnswer}
         />
       </Grid>
     </Grid>

@@ -11,6 +11,9 @@ interface SteppersProps {
 const Steppers: React.FC<SteppersProps> = ({ activeStep }) => {
   const steps = [
     {
+      label: "Consent",
+    },
+    {
       label: "Background Information",
     },
     {

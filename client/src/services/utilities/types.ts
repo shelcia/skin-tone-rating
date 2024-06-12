@@ -33,16 +33,12 @@ export interface SurveyAnswers {
 
 export interface SurveyAnswerResponse {
   [key: string]: string | number | SurveyAnswers[];
+  name: string;
   gender: string;
   age: number;
   education: string;
   race: string;
   skin: string;
-  // pSkin: number;
-  // pRace: string;
-  // pLip: number;
-  // pNose: number;
-  // pOverall: number;
   pratise: SurveyAnswers[];
   answers: SurveyAnswers[];
   email: string;

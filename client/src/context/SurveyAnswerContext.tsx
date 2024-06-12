@@ -31,6 +31,7 @@ export const SurveyAnswerProvider: React.FC<SurveyAnswerProviderProps> = ({
   children,
 }) => {
   const [surveyAnswers, setSurveyAnswers] = useState<SurveyAnswerResponse>({
+    name: "",
     gender: "",
     age: 0,
     education: "",

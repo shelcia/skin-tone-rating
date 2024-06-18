@@ -17,10 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// const csvFilePath = path.join(
-//   __dirname,
-//   "../server/db/players_data_cleaned-test-2.csv"
-// );
 export let records = [];
 
 const __filename = fileURLToPath(import.meta.url);
@@ -65,9 +61,12 @@ app.get("/", (req, res) => {
 loadCsv()
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`server up and running at  ${PORT}`);
+      console.log(`server up and running at ${PORT}`);
     });
   })
   .catch((err) => {
     console.error("Failed to load CSV data:", err);
   });
+
+// Export the app for serverless deployment
+export default app;

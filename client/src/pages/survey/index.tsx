@@ -100,6 +100,12 @@ const Survey = () => {
       const body: SurveyAnswerPayload = {
         id: answer.id,
         evaluation: {
+          name: surveyAnswers.name,
+          gender: surveyAnswers.gender,
+          age: surveyAnswers.age,
+          edu: surveyAnswers.education,
+          u_race: surveyAnswers.race,
+          skin: surveyAnswers.skin,
           st: answer.skin,
           race: answer.race,
           featuresa: answer.lip,

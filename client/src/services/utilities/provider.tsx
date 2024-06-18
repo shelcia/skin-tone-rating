@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { BACKEND_URL } from "../api";
-// import { LOCALHOST_URL } from "../api";
+// import { BACKEND_URL } from "../api";
+import { LOCALHOST_URL } from "../api";
 import {
   PersonImage,
   PersonImageResponse,
@@ -20,7 +20,7 @@ export class ApiService<T, P> {
   private TOKEN: string | null;
 
   constructor(endpoint: string, additionalUrl?: string) {
-    this.BASE_URL = BACKEND_URL;
+    this.BASE_URL = LOCALHOST_URL;
     this.ENDPOINT = endpoint;
     this.ADDITIONAL_URL = additionalUrl;
     this.TOKEN = token;
@@ -113,7 +113,7 @@ export class ApiService<T, P> {
 }
 
 export const imageService = new ApiService<PersonImageResponse, PersonImage>(
-  "images"
+  "document/images"
 );
 
 export const surveyUserService = new ApiService<
@@ -124,4 +124,4 @@ export const surveyUserService = new ApiService<
 export const surveyEditService = new ApiService<
   SurveyResponse,
   SurveyAnswerPayload
->("evaluate");
+>("document/evaluate");

@@ -1,10 +1,17 @@
-const express = require("express");
-const fs = require("fs");
-const csv = require("csv-parser");
-const createCsvWriter = require("csv-writer").createObjectCsvWriter;
-const cors = require("cors");
+import express from "express";
+import fs from "fs";
+import csv from "csv-parser";
+import cors from "cors";
+import path from "path";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+
 const PORT = process.env.PORT || 4050;
-const path = require("path");
+
+import authRoute from "./routes/auth/auth.js";
+import documentRoute from "./routes/document/document.js";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -14,13 +21,12 @@ app.use(express.json());
 //   __dirname,
 //   "../server/db/players_data_cleaned-test-2.csv"
 // );
+export let records = [];
 
-const csvFilePath = path.join(
-  __dirname,
-  "../server/db/players_data_cleaned-test.csv"
-);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-let records = [];
+const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
 
 // Load CSV data into memory
 function loadCsv() {
@@ -47,87 +53,10 @@ function loadCsv() {
   });
 }
 
-// Helper function to get the evaluation count
-function getEvaluationCount(record) {
-  let count = 0;
-  for (let i = 1; i <= 3; i++) {
-    if (record[`rater${i}_st`]) {
-      count++;
-    }
-  }
-  return count;
-}
+// ROUTE MIDDLEWARE
+app.use("/api/auth", authRoute);
+app.use("/api/document", documentRoute);
 
-// Function to get random elements from an array
-function getRandomElements(arr, count) {
-  const shuffled = arr.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-}
-
-// Endpoint to fetch images
-app.get("/images", (req, res) => {
-  let filteredRecords = records.filter(
-    (record) => getEvaluationCount(record) < 3
-  );
-  filteredRecords = filteredRecords.filter((record) => record.filename !== "0");
-  const randomImages = getRandomElements(filteredRecords, 90).map((record) => ({
-    id: record.id,
-    photo_url: record.photo_url,
-    filename: record.filename,
-  }));
-  res.json({ status: 200, length: randomImages.length, data: randomImages });
-});
-
-// Endpoint to submit evaluation
-app.post("/evaluate", (req, res) => {
-  const { id, evaluation } = req.body;
-  console.log({ evaluation });
-  const record = records.find((r) => r.id === id);
-  if (!record) {
-    return res.status(404).json({ status: 404, message: "Record not found" });
-  }
-
-  // Find the next available rater slot
-  let raterSlot = null;
-  for (let i = 1; i <= 3; i++) {
-    if (!record[`rater${i}_st`]) {
-      raterSlot = i;
-      break;
-    }
-  }
-  if (!raterSlot) {
-    return res
-      .status(400)
-      .json({ status: 400, message: "Evaluation limit reached" });
-  }
-
-  // Add evaluation data to the record
-  record[`rater${raterSlot}_st`] = evaluation.st;
-  record[`rater${raterSlot}_race`] = evaluation.race;
-  record[`rater${raterSlot}_featuresa`] = evaluation.featuresa;
-  record[`rater${raterSlot}_featuresb`] = evaluation.featuresb;
-  record[`rater${raterSlot}_featuresc`] = evaluation.featuresc;
-
-  // Update the CSV file
-  const csvWriter = createCsvWriter({
-    path: csvFilePath,
-    // header: Object.keys(records[0]),
-    header: Object.keys(records[0]).map((header) => ({
-      id: header,
-      title: header,
-    })),
-  });
-
-  csvWriter
-    .writeRecords(records)
-    .then(() => {
-      res.status(200).json({ status: 200, message: "Evaluation recorded" });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ status: 500, message: "Failed to update CSV" });
-    });
-});
 app.get("/", (req, res) => {
   res.send(`<h3>Hey! Skin Tone Backend is up !</h3>`);
 });

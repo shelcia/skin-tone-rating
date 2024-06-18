@@ -53,6 +53,12 @@ export interface SurveyResponse {
 export interface SurveyAnswerPayload {
   id: string;
   evaluation: {
+    name: string;
+    gender: string;
+    age: string | number;
+    edu: string;
+    u_race: string;
+    skin: string;
     st: string;
     race: string;
     featuresa: string | number;

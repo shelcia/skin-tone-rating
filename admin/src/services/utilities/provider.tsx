@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-// import { BACKEND_URL } from "../api";
-import { LOCALHOST_URL } from "../api";
+import { BACKEND_URL } from "../api";
+// import { LOCALHOST_URL } from "../api";
 import { AuthResponse, AuthPayload, SurveyResponse } from "./types";
 
 export class ApiService<T, P> {
@@ -11,7 +11,7 @@ export class ApiService<T, P> {
   private TOKEN: string | null;
 
   constructor(endpoint: string, additionalUrl?: string) {
-    this.BASE_URL = LOCALHOST_URL;
+    this.BASE_URL = BACKEND_URL;
     this.ENDPOINT = endpoint;
     this.ADDITIONAL_URL = additionalUrl;
     this.TOKEN = localStorage.getItem("moral-token");

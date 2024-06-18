@@ -8,7 +8,7 @@ interface ExitProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Exit: React.FC<ExitProps> = ({ isExitSubmitted }) => {
+const Exit: React.FC<ExitProps> = () => {
   // const { surveyAnswers, setSurveyAnswers } = useSurveyAnswerContext();
 
   // const handleExitChange = (selectedOption: string, field: string) => {

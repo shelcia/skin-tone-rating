@@ -22,7 +22,12 @@ export let records = [];
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
+// const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
+
+const csvFilePath = path.join(
+  __dirname,
+  "../server/db/players_data_cleaned-test.csv"
+);
 
 // Load CSV data into memory
 function loadCsv() {

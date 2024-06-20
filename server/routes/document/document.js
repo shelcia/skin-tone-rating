@@ -1,6 +1,4 @@
 import { Router } from "express";
-// const createCsvWriter = require("csv-writer").createObjectCsvWriter;
-// import createCsvWriter from "csv-writer";
 import { createObjectCsvWriter } from "csv-writer";
 const createCsvWriter = createObjectCsvWriter;
 import { records } from "../../index.js";
@@ -8,6 +6,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 import csv from "csv-parser";
+import { DEMO, RATER1, RATER2, RATER3 } from "../../constants/index.js";
 
 const router = Router();
 
@@ -44,49 +43,54 @@ router.get("/images", (req, res) => {
 
 // Endpoint to submit evaluation
 router.post("/evaluate", (req, res) => {
-  const { id, evaluation } = req.body;
-  console.log({ evaluation });
-  const record = records.find((r) => r.id === id);
-  if (!record) {
-    return res.status(404).json({ status: 404, message: "Record not found" });
-  }
+  const { name, gender, age, edu, u_race, skin, evaluations } = req.body;
+  console.log({ evaluations });
 
-  // Find the next available rater slot
-  let raterSlot = null;
-  for (let i = 1; i <= 3; i++) {
-    if (!record[`rater${i}_st`]) {
-      raterSlot = i;
-      break;
+  let csvWriter;
+
+  evaluations.map((evaluation) => {
+    const record = records.find((r) => r.id === evaluation.id);
+    if (!record) {
+      return res.status(404).json({ status: 404, message: "Record not found" });
     }
-  }
-  if (!raterSlot) {
-    return res
-      .status(400)
-      .json({ status: 400, message: "Evaluation limit reached" });
-  }
 
-  // Add evaluation data to the record
-  record[`rater${raterSlot}_name`] = evaluation.name;
-  record[`rater${raterSlot}_gender`] = evaluation.gender;
-  record[`rater${raterSlot}_age`] = evaluation.age;
-  record[`rater${raterSlot}_edu`] = evaluation.edu;
-  record[`rater${raterSlot}_u_race`] = evaluation.u_race;
-  record[`rater${raterSlot}_skin`] = evaluation.skin;
+    // Find the next available rater slot
+    let raterSlot = null;
+    for (let i = 1; i <= 3; i++) {
+      if (!record[`rater${i}_st`]) {
+        raterSlot = i;
+        break;
+      }
+    }
+    if (!raterSlot) {
+      return res
+        .status(400)
+        .json({ status: 400, message: "Evaluation limit reached" });
+    }
 
-  record[`rater${raterSlot}_st`] = evaluation.st;
-  record[`rater${raterSlot}_race`] = evaluation.race;
-  record[`rater${raterSlot}_featuresa`] = evaluation.featuresa;
-  record[`rater${raterSlot}_featuresb`] = evaluation.featuresb;
-  record[`rater${raterSlot}_featuresc`] = evaluation.featuresc;
+    record[`rater${raterSlot}_name`] = name;
+    record[`rater${raterSlot}_gender`] = gender;
+    record[`rater${raterSlot}_age`] = age;
+    record[`rater${raterSlot}_edu`] = edu;
+    record[`rater${raterSlot}_u_race`] = u_race;
+    record[`rater${raterSlot}_skin`] = skin;
 
-  // Update the CSV file
-  const csvWriter = createCsvWriter({
-    path: csvFilePath,
-    // header: Object.keys(records[0]),
-    header: Object.keys(records[0]).map((header) => ({
-      id: header,
-      title: header,
-    })),
+    // Add evaluation data to the record
+    record[`rater${raterSlot}_st`] = evaluation.st;
+    record[`rater${raterSlot}_race`] = evaluation.race;
+    record[`rater${raterSlot}_featuresa`] = evaluation.featuresa;
+    record[`rater${raterSlot}_featuresb`] = evaluation.featuresb;
+    record[`rater${raterSlot}_featuresc`] = evaluation.featuresc;
+
+    // Update the CSV file
+    csvWriter = createCsvWriter({
+      path: csvFilePath,
+      // header: Object.keys(records[0]),
+      header: Object.keys(records[0]).map((header) => ({
+        id: header,
+        title: header,
+      })),
+    });
   });
 
   csvWriter
@@ -109,22 +113,55 @@ const csvFilePath = path.join(
 );
 
 // API endpoint to view CSV contents
-router.get("/view-csv", (req, res) => {
+router.get("/view-csv/:id", (req, res) => {
   try {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const csvFilePath = path.join(
+      __dirname,
+      "../../db/players_data_cleaned-test-2.csv"
+    );
     const results = [];
+
+    let columnsToInclude = [];
+    switch (req.params.id) {
+      case "DEMO":
+        columnsToInclude = DEMO;
+        break;
+      case "RATER1":
+        columnsToInclude = RATER1;
+        break;
+      case "RATER2":
+        columnsToInclude = RATER2;
+        break;
+      case "RATER3":
+        columnsToInclude = RATER3;
+        break;
+      default:
+        columnsToInclude = [];
+        break;
+    }
+
     fs.createReadStream(csvFilePath)
       .pipe(csv())
-      .on("data", (data) => results.push(data))
+      .on("data", (data) => {
+        results.push(data);
+        // const filteredData = {};
+        // columnsToInclude.forEach((column) => {
+        //   if (data[column] !== undefined) {
+        //     filteredData[column] = data[column];
+        //   }
+        // });
+        // results.push(filteredData);
+      })
       .on("end", () => {
         res.json(results);
       })
       .on("error", (err) => {
         res.status(500).send("Error reading CSV file");
-        return;
       });
   } catch (error) {
     res.status(500).json({ status: "400", message: error });
-    return;
   }
 });
 

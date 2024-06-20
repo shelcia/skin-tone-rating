@@ -68,5 +68,4 @@ loadCsv()
     console.error("Failed to load CSV data:", err);
   });
 
-// Export the app for serverless deployment
 export default app;

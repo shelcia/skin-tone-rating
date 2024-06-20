@@ -13,13 +13,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@vercel/blob": "^0.23.3",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "joi": "^17.13.1",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2"
   },
   "type": "module",
   "devDependencies": {

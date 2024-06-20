@@ -73,8 +73,8 @@ const SurveySection: React.FC<SurveySectionProps> = ({
           <Box>
             <Zoom>
               <img
-                srcSet={typeof image === "string" ? image : image.photo_url}
-                src={typeof image === "string" ? image : image.photo_url}
+                srcSet={typeof image === "string" ? image : image?.photo_url}
+                src={typeof image === "string" ? image : image?.photo_url}
                 alt={"image"}
                 loading="lazy"
                 style={{

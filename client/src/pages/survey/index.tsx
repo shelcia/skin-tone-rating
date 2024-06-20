@@ -8,7 +8,7 @@ import { secondary } from "../../theme/themeColors";
 import CommonSnackbar from "../../common/CommonSnackbar";
 import { surveyEditService } from "../../services/utilities/provider";
 import {
-  RaceAnswer,
+  Evaluation,
   SurveyAnswerPayload,
 } from "../../services/utilities/types";
 
@@ -96,34 +96,41 @@ const Survey = () => {
   };
 
   const sendAnswer = async () => {
-    surveyAnswers.answers.map(async (answer: RaceAnswer) => {
-      const body: SurveyAnswerPayload = {
-        id: answer.id,
-        evaluation: {
-          name: surveyAnswers.name,
-          gender: surveyAnswers.gender,
-          age: surveyAnswers.age,
-          edu: surveyAnswers.education,
-          u_race: surveyAnswers.race,
-          skin: surveyAnswers.skin,
+    // surveyAnswers.answers.map(async (answer: RaceAnswer) => {
+    let evaluations: Evaluation[] = [];
+    surveyAnswers.answers.map((answer) => {
+      evaluations = [
+        ...evaluations,
+        {
+          id: answer.id,
           st: answer.skin,
           race: answer.race,
           featuresa: answer.lip,
           featuresb: answer.nose,
           featuresc: answer.overall,
         },
-      };
-      await surveyEditService
-        .post(body)
-        .then((res) => {
-          console.log(res);
-          navigate("/success");
-        })
-        .finally(() => {
-          setActiveStep(0);
-        });
+      ];
     });
-    console.log({ surveyAnswers });
+
+    const body: SurveyAnswerPayload = {
+      name: surveyAnswers.name,
+      gender: surveyAnswers.gender,
+      age: surveyAnswers.age,
+      edu: surveyAnswers.education,
+      u_race: surveyAnswers.race,
+      skin: surveyAnswers.skin,
+      evaluations: evaluations,
+    };
+    await surveyEditService
+      .post(body)
+      .then((res) => {
+        console.log(res);
+        navigate("/success");
+      })
+      .finally(() => {
+        setActiveStep(0);
+      });
+
     setSurveyAnswers({
       name: "",
       gender: "",

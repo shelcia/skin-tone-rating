@@ -50,21 +50,23 @@ export interface SurveyResponse {
   message: SurveyAnswerResponse[];
 }
 
-export interface SurveyAnswerPayload {
+export interface Evaluation {
   id: string;
-  evaluation: {
-    name: string;
-    gender: string;
-    age: string | number;
-    edu: string;
-    u_race: string;
-    skin: string;
-    st: string;
-    race: string;
-    featuresa: string | number;
-    featuresb: string | number;
-    featuresc: string | number;
-  };
+  st: string;
+  race: string;
+  featuresa: string | number;
+  featuresb: string | number;
+  featuresc: string | number;
+}
+
+export interface SurveyAnswerPayload {
+  name: string;
+  gender: string;
+  age: string | number;
+  edu: string;
+  u_race: string;
+  skin: string;
+  evaluations: Evaluation[];
 }
 
 export interface PersonImage {

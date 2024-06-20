@@ -24,8 +24,27 @@ const ExcelData: React.FC = () => {
 
   const fetchSurveyData = async () => {
     setIsLoading(true);
+    // const key = "id";
     try {
-      const res: SurveyResponse[] = await documentService.getAll();
+      const DEMO = await documentService.getById("DEMO");
+      const RATER1 = await documentService.getById("RATER1");
+      const RATER2 = await documentService.getById("RATER2");
+      const RATER3 = await documentService.getById("RATER3");
+      // console.log(DEMO.splice(0, 5));
+      // const res = [...DEMO.slice(0, 100)];
+      const res = DEMO.map((row, index: number) => ({
+        ...row,
+        ...RATER1[index],
+        ...RATER2[index],
+        ...RATER3[index],
+      }));
+
+      // res.sort((a, b) => {
+      //   if (parseInt(a[key]) < parseInt(b[key])) return -1;
+      //   if (parseInt(a[key]) > parseInt(b[key])) return 1;
+      //   return 0;
+      // });
+
       console.log(res);
       setSurveys(res);
       setIsLoading(false);
@@ -76,6 +95,7 @@ const ExcelData: React.FC = () => {
   return (
     <Box sx={{ height: "70vh", width: "100%" }}>
       <DataGrid
+        getRowId={(row) => row.first_name}
         rows={surveys}
         columns={SURVEY_COL}
         initialState={{

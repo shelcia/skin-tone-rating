@@ -17,17 +17,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// const csvFilePath = path.join(
+//   __dirname,
+//   "../server/db/players_data_cleaned-test-2.csv"
+// );
 export let records = [];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
+const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
 
-const csvFilePath = path.join(
-  __dirname,
-  "../server/db/players_data_cleaned-test.csv"
-);
+console.log(csvFilePath);
 
 // Load CSV data into memory
 function loadCsv() {
@@ -66,11 +67,9 @@ app.get("/", (req, res) => {
 loadCsv()
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`server up and running at ${PORT}`);
+      console.log(`server up and running at  ${PORT}`);
     });
   })
   .catch((err) => {
     console.error("Failed to load CSV data:", err);
   });
-
-export default app;

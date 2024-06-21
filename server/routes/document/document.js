@@ -2,7 +2,6 @@ import { Router } from "express";
 import { createObjectCsvWriter } from "csv-writer";
 const createCsvWriter = createObjectCsvWriter;
 import { records } from "../../index.js";
-import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 import csv from "csv-parser";
@@ -107,12 +106,10 @@ router.post("/evaluate", (req, res) => {
     });
 });
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+// Use process.cwd() to get the correct path
 const csvFilePath = path.join(
-  __dirname,
-  "../../db/players_data_cleaned-test-2.csv"
+  process.cwd(),
+  "public/db/players_data_cleaned-test-2.csv"
 );
 
 // API endpoint to view CSV contents

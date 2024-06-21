@@ -22,9 +22,13 @@ export let records = [];
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
+// Update to resolve path correctly from project root
+const csvFilePath = path.join(
+  __dirname,
+  "../public/db/players_data_cleaned-test-2.csv"
+);
 
-console.log(`CSV file path: ${csvFilePath}`); // Log the file path to verify
+console.log(`CSV file path: ${csvFilePath}`);
 
 // Check if the file exists
 if (!fs.existsSync(csvFilePath)) {

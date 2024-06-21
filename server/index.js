@@ -73,4 +73,7 @@ app.get("/", (req, res) => {
   res.send("<h3>Hey! Skin Tone Backend is up!</h3>");
 });
 
+// Export records
+export { records };
+
 export default app;

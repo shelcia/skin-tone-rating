@@ -8,6 +8,10 @@ import csv from "csv-parser";
 import { DEMO, RATER1, RATER2, RATER3 } from "../../constants/index.js";
 
 const router = Router();
+const csvFilePath = path.join(
+  process.cwd(),
+  "public/db/players_data_cleaned-test-2.csv"
+);
 
 // Helper function to get the evaluation count
 function getEvaluationCount(record) {
@@ -57,7 +61,6 @@ router.post("/evaluate", (req, res) => {
       return res.status(404).json({ status: 404, message: "Record not found" });
     }
 
-    // Find the next available rater slot
     let raterSlot = null;
     for (let i = 1; i <= 3; i++) {
       if (!record[`rater${i}_st`]) {
@@ -78,14 +81,12 @@ router.post("/evaluate", (req, res) => {
     record[`rater${raterSlot}_u_race`] = u_race;
     record[`rater${raterSlot}_skin`] = skin;
 
-    // Add evaluation data to the record
     record[`rater${raterSlot}_st`] = evaluation.st;
     record[`rater${raterSlot}_race`] = evaluation.race;
     record[`rater${raterSlot}_featuresa`] = evaluation.featuresa;
     record[`rater${raterSlot}_featuresb`] = evaluation.featuresb;
     record[`rater${raterSlot}_featuresc`] = evaluation.featuresc;
 
-    // Update the CSV file
     csvWriter = createCsvWriter({
       path: csvFilePath,
       header: Object.keys(records[0]).map((header) => ({
@@ -106,17 +107,10 @@ router.post("/evaluate", (req, res) => {
     });
 });
 
-// Use process.cwd() to get the correct path
-const csvFilePath = path.join(
-  process.cwd(),
-  "public/db/players_data_cleaned-test-2.csv"
-);
-
 // API endpoint to view CSV contents
 router.get("/view-csv/:id", (req, res) => {
   try {
     const results = [];
-
     let columnsToInclude = [];
     switch (req.params.id) {
       case "DEMO":

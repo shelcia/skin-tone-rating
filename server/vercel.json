@@ -2,6 +2,5 @@
   "version": 2,
   "name": "skin-tone-backend",
   "builds": [{ "src": "index.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/index.js" }],
-  "files": ["server/db/players_data_cleaned-test-2.csv"]
+  "routes": [{ "src": "/(.*)", "dest": "/index.js" }]
 }

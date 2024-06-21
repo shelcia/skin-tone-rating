@@ -66,7 +66,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/document", documentRoute);
 
 app.get("/", (req, res) => {
-  res.send(`<h3>Hey! Skin Tone Backend is up !</h3>`);
+  res.send(`<h3>Hey! Skin Tone Backend is up!</h3>`);
 });
 
 // Start server and load CSV data

@@ -89,7 +89,6 @@ router.post("/evaluate", (req, res) => {
     // Update the CSV file
     csvWriter = createCsvWriter({
       path: csvFilePath,
-      // header: Object.keys(records[0]),
       header: Object.keys(records[0]).map((header) => ({
         id: header,
         title: header,
@@ -119,12 +118,6 @@ const csvFilePath = path.join(
 // API endpoint to view CSV contents
 router.get("/view-csv/:id", (req, res) => {
   try {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const csvFilePath = path.join(
-      __dirname,
-      "../../db/players_data_cleaned-test-2.csv"
-    );
     const results = [];
 
     let columnsToInclude = [];
@@ -149,7 +142,6 @@ router.get("/view-csv/:id", (req, res) => {
     fs.createReadStream(csvFilePath)
       .pipe(csv())
       .on("data", (data) => {
-        // results.push(data);
         const filteredData = {};
         columnsToInclude.forEach((column) => {
           if (data[column] !== undefined) {
@@ -162,10 +154,12 @@ router.get("/view-csv/:id", (req, res) => {
         res.json(results);
       })
       .on("error", (err) => {
+        console.error("Error reading CSV file:", err);
         res.status(500).send("Error reading CSV file");
       });
   } catch (error) {
-    res.status(500).json({ status: "400", message: error });
+    console.error("Error processing request:", error);
+    res.status(500).json({ status: 500, message: error.message });
   }
 });
 

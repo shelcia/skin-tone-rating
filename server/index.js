@@ -73,3 +73,5 @@ loadCsv()
   .catch((err) => {
     console.error("Failed to load CSV data:", err);
   });
+
+export default app;

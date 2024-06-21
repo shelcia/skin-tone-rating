@@ -29,6 +29,10 @@ function getRandomElements(arr, count) {
 
 // Endpoint to fetch images
 router.get("/images", (req, res) => {
+  if (!records.length) {
+    console.error("No records loaded");
+    return res.status(500).json({ status: 500, message: "No records loaded" });
+  }
   let filteredRecords = records.filter(
     (record) => getEvaluationCount(record) < 3
   );
@@ -145,14 +149,14 @@ router.get("/view-csv/:id", (req, res) => {
     fs.createReadStream(csvFilePath)
       .pipe(csv())
       .on("data", (data) => {
-        results.push(data);
-        // const filteredData = {};
-        // columnsToInclude.forEach((column) => {
-        //   if (data[column] !== undefined) {
-        //     filteredData[column] = data[column];
-        //   }
-        // });
-        // results.push(filteredData);
+        // results.push(data);
+        const filteredData = {};
+        columnsToInclude.forEach((column) => {
+          if (data[column] !== undefined) {
+            filteredData[column] = data[column];
+          }
+        });
+        results.push(filteredData);
       })
       .on("end", () => {
         res.json(results);

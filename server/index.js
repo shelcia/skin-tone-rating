@@ -17,10 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// const csvFilePath = path.join(
-//   __dirname,
-//   "../server/db/players_data_cleaned-test-2.csv"
-// );
 export let records = [];
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,7 +24,14 @@ const __dirname = path.dirname(__filename);
 
 const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
 
-console.log(csvFilePath);
+console.log(`CSV file path: ${csvFilePath}`); // Log the file path to verify
+
+// Check if the file exists
+if (!fs.existsSync(csvFilePath)) {
+  console.error(`CSV file not found: ${csvFilePath}`);
+} else {
+  console.log(`CSV file found: ${csvFilePath}`);
+}
 
 // Load CSV data into memory
 function loadCsv() {
@@ -37,7 +40,6 @@ function loadCsv() {
     fs.createReadStream(csvFilePath)
       .pipe(csv())
       .on("data", (data) => {
-        // Parse evaluation columns
         for (let i = 1; i <= 3; i++) {
           data[`rater${i}_st`] = data[`rater${i}_st`] || "";
           data[`rater${i}_race`] = data[`rater${i}_race`] || "";
@@ -51,7 +53,10 @@ function loadCsv() {
         records = results;
         resolve(results);
       })
-      .on("error", reject);
+      .on("error", (err) => {
+        console.error("Error reading CSV file:", err);
+        reject(err);
+      });
   });
 }
 

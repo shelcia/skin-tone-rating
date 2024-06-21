@@ -51,6 +51,7 @@ function loadCsv() {
       })
       .on("end", () => {
         records = results;
+        console.log(`Loaded ${records.length} records from CSV`);
         resolve(results);
       })
       .on("error", (err) => {
@@ -72,7 +73,7 @@ app.get("/", (req, res) => {
 loadCsv()
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`server up and running at  ${PORT}`);
+      console.log(`Server up and running at ${PORT}`);
     });
   })
   .catch((err) => {

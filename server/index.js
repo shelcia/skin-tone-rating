@@ -11,10 +11,9 @@ dotenv.config();
 const PORT = process.env.PORT || 4050;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const csvFilePath = path.join(
-  process.cwd(),
-  "public/db/players_data_cleaned-test-2.csv"
-);
+
+// Define the path to the CSV file
+const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
 
 const app = express();
 app.use(cors());
@@ -24,7 +23,6 @@ let records = [];
 
 console.log(`CSV file path: ${csvFilePath}`);
 
-// Load CSV data into memory
 const loadCsv = () => {
   return new Promise((resolve, reject) => {
     const results = [];
@@ -52,7 +50,6 @@ const loadCsv = () => {
   });
 };
 
-// Start server and load CSV data
 loadCsv()
   .then(() => {
     app.listen(PORT, () => {
@@ -63,7 +60,6 @@ loadCsv()
     console.error("Failed to load CSV data:", err);
   });
 
-// Route Middleware
 import authRoute from "./routes/auth/auth.js";
 import documentRoute from "./routes/document/document.js";
 app.use("/api/auth", authRoute);
@@ -73,7 +69,5 @@ app.get("/", (req, res) => {
   res.send("<h3>Hey! Skin Tone Backend is up!</h3>");
 });
 
-// Export records
 export { records };
-
 export default app;

@@ -1,16 +1,17 @@
 import { Router } from "express";
 import { createObjectCsvWriter } from "csv-writer";
-const createCsvWriter = createObjectCsvWriter;
-import { records } from "../../index.js";
-import path from "path";
 import fs from "fs";
 import csv from "csv-parser";
+import path from "path";
+import { records } from "../../index.js"; // Adjust the path as necessary
+import { fileURLToPath } from "url";
 import { DEMO, RATER1, RATER2, RATER3 } from "../../constants/index.js";
 
 const router = Router();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const csvFilePath = path.join(
-  process.cwd(),
-  "public/db/players_data_cleaned-test-2.csv"
+  __dirname,
+  "../../db/players_data_cleaned-test-2.csv"
 );
 
 // Helper function to get the evaluation count
@@ -51,11 +52,8 @@ router.get("/images", (req, res) => {
 // Endpoint to submit evaluation
 router.post("/evaluate", (req, res) => {
   const { name, gender, age, edu, u_race, skin, evaluations } = req.body;
-  console.log({ evaluations });
 
-  let csvWriter;
-
-  evaluations.map((evaluation) => {
+  evaluations.forEach((evaluation) => {
     const record = records.find((r) => r.id === evaluation.id);
     if (!record) {
       return res.status(404).json({ status: 404, message: "Record not found" });
@@ -86,14 +84,14 @@ router.post("/evaluate", (req, res) => {
     record[`rater${raterSlot}_featuresa`] = evaluation.featuresa;
     record[`rater${raterSlot}_featuresb`] = evaluation.featuresb;
     record[`rater${raterSlot}_featuresc`] = evaluation.featuresc;
+  });
 
-    csvWriter = createCsvWriter({
-      path: csvFilePath,
-      header: Object.keys(records[0]).map((header) => ({
-        id: header,
-        title: header,
-      })),
-    });
+  const csvWriter = createObjectCsvWriter({
+    path: csvFilePath,
+    header: Object.keys(records[0]).map((header) => ({
+      id: header,
+      title: header,
+    })),
   });
 
   csvWriter
@@ -107,51 +105,47 @@ router.post("/evaluate", (req, res) => {
     });
 });
 
-// API endpoint to view CSV contents
+// Endpoint to view specific CSV data
 router.get("/view-csv/:id", (req, res) => {
-  try {
-    const results = [];
-    let columnsToInclude = [];
-    switch (req.params.id) {
-      case "DEMO":
-        columnsToInclude = DEMO;
-        break;
-      case "RATER1":
-        columnsToInclude = RATER1;
-        break;
-      case "RATER2":
-        columnsToInclude = RATER2;
-        break;
-      case "RATER3":
-        columnsToInclude = RATER3;
-        break;
-      default:
-        columnsToInclude = [];
-        break;
-    }
-
-    fs.createReadStream(csvFilePath)
-      .pipe(csv())
-      .on("data", (data) => {
-        const filteredData = {};
-        columnsToInclude.forEach((column) => {
-          if (data[column] !== undefined) {
-            filteredData[column] = data[column];
-          }
-        });
-        results.push(filteredData);
-      })
-      .on("end", () => {
-        res.json(results);
-      })
-      .on("error", (err) => {
-        console.error("Error reading CSV file:", err);
-        res.status(500).send("Error reading CSV file");
-      });
-  } catch (error) {
-    console.error("Error processing request:", error);
-    res.status(500).json({ status: 500, message: error.message });
+  const { id } = req.params;
+  let columnsToInclude = [];
+  switch (id) {
+    case "DEMO":
+      columnsToInclude = DEMO;
+      break;
+    case "RATER1":
+      columnsToInclude = RATER1;
+      break;
+    case "RATER2":
+      columnsToInclude = RATER2;
+      break;
+    case "RATER3":
+      columnsToInclude = RATER3;
+      break;
+    default:
+      return res
+        .status(400)
+        .json({ status: "400", message: "Invalid column id" });
   }
+
+  const results = [];
+  fs.createReadStream(csvFilePath)
+    .pipe(csv())
+    .on("data", (data) => {
+      const filteredData = {};
+      columnsToInclude.forEach((column) => {
+        if (data[column] !== undefined) {
+          filteredData[column] = data[column];
+        }
+      });
+      results.push(filteredData);
+    })
+    .on("end", () => {
+      res.json(results);
+    })
+    .on("error", (err) => {
+      res.status(500).send("Error reading CSV file");
+    });
 });
 
 export default router;

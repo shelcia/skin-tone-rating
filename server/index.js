@@ -20,12 +20,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-export let records = [];
+let records = [];
 
 console.log(`CSV file path: ${csvFilePath}`);
 
 // Load CSV data into memory
-function loadCsv() {
+const loadCsv = () => {
   return new Promise((resolve, reject) => {
     const results = [];
     fs.createReadStream(csvFilePath)
@@ -50,9 +50,9 @@ function loadCsv() {
         reject(err);
       });
   });
-}
+};
 
-// Load CSV data before starting the server
+// Start server and load CSV data
 loadCsv()
   .then(() => {
     app.listen(PORT, () => {
@@ -72,3 +72,5 @@ app.use("/api/document", documentRoute);
 app.get("/", (req, res) => {
   res.send("<h3>Hey! Skin Tone Backend is up!</h3>");
 });
+
+export default app;

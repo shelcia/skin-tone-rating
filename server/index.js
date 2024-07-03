@@ -13,11 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define the path to the CSV file
-// const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
-const csvFilePath = path.join(
-  "/var/task/server/",
-  "db/players_data_cleaned-test-2.csv"
-);
+const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
 
 const app = express();
 app.use(cors());
@@ -30,17 +26,28 @@ console.log(`CSV file path: ${csvFilePath}`);
 const loadCsv = () => {
   return new Promise((resolve, reject) => {
     const results = [];
-    fs.createReadStream(csvFilePath)
+    console.log(`Attempting to read CSV file at: ${csvFilePath}`);
+
+    const stream = fs
+      .createReadStream(csvFilePath)
+      .on("error", (err) => {
+        console.error("Error opening CSV file:", err);
+        reject(err);
+      })
       .pipe(csv())
       .on("data", (data) => {
-        for (let i = 1; i <= 3; i++) {
-          data[`rater${i}_st`] = data[`rater${i}_st`] || "";
-          data[`rater${i}_race`] = data[`rater${i}_race`] || "";
-          data[`rater${i}_featuresa`] = data[`rater${i}_featuresa`] || "";
-          data[`rater${i}_featuresb`] = data[`rater${i}_featuresb`] || "";
-          data[`rater${i}_featuresc`] = data[`rater${i}_featuresc`] || "";
+        try {
+          for (let i = 1; i <= 3; i++) {
+            data[`rater${i}_st`] = data[`rater${i}_st`] || "";
+            data[`rater${i}_race`] = data[`rater${i}_race`] || "";
+            data[`rater${i}_featuresa`] = data[`rater${i}_featuresa`] || "";
+            data[`rater${i}_featuresb`] = data[`rater${i}_featuresb`] || "";
+            data[`rater${i}_featuresc`] = data[`rater${i}_featuresc`] || "";
+          }
+          results.push(data);
+        } catch (err) {
+          console.error("Error processing data:", err);
         }
-        results.push(data);
       })
       .on("end", () => {
         records = results;
@@ -51,11 +58,16 @@ const loadCsv = () => {
         console.error("Error reading CSV file:", err);
         reject(err);
       });
+
+    stream.on("error", (err) => {
+      console.error("Stream error:", err);
+    });
   });
 };
 
 loadCsv()
   .then(() => {
+    console.log("CSV data loaded successfully, starting server...");
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });

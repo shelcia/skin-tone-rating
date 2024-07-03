@@ -85,16 +85,17 @@ const loadCsv = () => {
   });
 };
 
-loadCsv()
-  .then(() => {
+(async () => {
+  try {
+    await loadCsv();
     console.log("CSV data loaded successfully, starting server...");
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error("Failed to load CSV data:", err);
-  });
+  }
+})();
 
 import authRoute from "./routes/auth/auth.js";
 import documentRoute from "./routes/document/document.js";

@@ -1,7 +1,8 @@
 const express = require("express");
 const fs = require("fs");
 const csv = require("csv-parser");
-const { createObjectCsvWriter } = require("csv-writer");
+// const { createObjectCsvWriter, createCsvWriter } = require("csv-writer");
+const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -145,7 +146,62 @@ app.get("/api/document/images", (req, res) => {
 });
 
 // Endpoint to submit evaluation
+// app.post("/api/document/evaluate", (req, res) => {
+//   const { name, gender, age, edu, u_race, skin, evaluations } = req.body;
+
+//   evaluations.forEach((evaluation) => {
+//     const record = records.find((r) => r.id === evaluation.id);
+//     if (!record) {
+//       return res.status(404).json({ status: 404, message: "Record not found" });
+//     }
+
+//     let raterSlot = null;
+//     for (let i = 1; i <= 3; i++) {
+//       if (!record[`rater${i}_st`]) {
+//         raterSlot = i;
+//         break;
+//       }
+//     }
+//     if (!raterSlot) {
+//       return res
+//         .status(400)
+//         .json({ status: 400, message: "Evaluation limit reached" });
+//     }
+
+//     record[`rater${raterSlot}_name`] = name;
+//     record[`rater${raterSlot}_gender`] = gender;
+//     record[`rater${raterSlot}_age`] = age;
+//     record[`rater${raterSlot}_edu`] = edu;
+//     record[`rater${raterSlot}_u_race`] = u_race;
+//     record[`rater${raterSlot}_skin`] = skin;
+
+//     record[`rater${raterSlot}_st`] = evaluation.st;
+//     record[`rater${raterSlot}_race`] = evaluation.race;
+//     record[`rater${raterSlot}_featuresa`] = evaluation.featuresa;
+//     record[`rater${raterSlot}_featuresb`] = evaluation.featuresb;
+//     record[`rater${raterSlot}_featuresc`] = evaluation.featuresc;
+//   });
+
+//   const csvWriter = createObjectCsvWriter({
+//     path: csvFilePath,
+//     header: Object.keys(records[0]).map((header) => ({
+//       id: header,
+//       title: header,
+//     })),
+//   });
+
+//   csvWriter
+//     .writeRecords(records)
+//     .then(() => {
+//       res.status(200).json({ status: 200, message: "Evaluation recorded" });
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       res.status(500).json({ status: 500, message: "Failed to update CSV" });
+//     });
+// });
 app.post("/api/document/evaluate", (req, res) => {
+  // const { id, evaluations } = req.body;
   const { name, gender, age, edu, u_race, skin, evaluations } = req.body;
 
   evaluations.forEach((evaluation) => {
@@ -154,6 +210,7 @@ app.post("/api/document/evaluate", (req, res) => {
       return res.status(404).json({ status: 404, message: "Record not found" });
     }
 
+    // Find the next available rater slot
     let raterSlot = null;
     for (let i = 1; i <= 3; i++) {
       if (!record[`rater${i}_st`]) {
@@ -162,11 +219,13 @@ app.post("/api/document/evaluate", (req, res) => {
       }
     }
     if (!raterSlot) {
-      return res
-        .status(400)
-        .json({ status: 400, message: "Evaluation limit reached" });
+      return;
+      // return res
+      //   .status(400)
+      //   .json({ status: 400, message: "Evaluation limit reached" });
     }
 
+    // Add evaluation data to the record
     record[`rater${raterSlot}_name`] = name;
     record[`rater${raterSlot}_gender`] = gender;
     record[`rater${raterSlot}_age`] = age;
@@ -181,7 +240,8 @@ app.post("/api/document/evaluate", (req, res) => {
     record[`rater${raterSlot}_featuresc`] = evaluation.featuresc;
   });
 
-  const csvWriter = createObjectCsvWriter({
+  // Update the CSV file
+  const csvWriter = createCsvWriter({
     path: csvFilePath,
     header: Object.keys(records[0]).map((header) => ({
       id: header,

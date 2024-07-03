@@ -1,16 +1,19 @@
-import { Router } from "express";
-import { createObjectCsvWriter } from "csv-writer";
-import fs from "fs";
-import csv from "csv-parser";
-import path from "path";
-import { records } from "../../index.js"; // Adjust the path as necessary
-import { fileURLToPath } from "url";
-import { DEMO, RATER1, RATER2, RATER3 } from "../../constants/index.js";
+const { Router } = require("express");
+const { createObjectCsvWriter } = require("csv-writer");
+const fs = require("fs");
+const csv = require("csv-parser");
+const path = require("path");
+const { records } = require("../../index.js"); // Adjust the path as necessary
+// const { fileURLToPath } = require("url");
+const { DEMO, RATER1, RATER2, RATER3 } = require("../../constants/index.js");
 
 const router = Router();
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const _dirname = path.resolve();
+
+// Define the path to the CSV file
 const csvFilePath = path.join(
-  __dirname,
+  _dirname,
   "../../db/players_data_cleaned-test-2.csv"
 );
 
@@ -33,6 +36,7 @@ function getRandomElements(arr, count) {
 
 // Endpoint to fetch images
 router.get("/images", (req, res) => {
+  console.log(records);
   if (!records.length) {
     console.error("No records loaded");
     return res.status(500).json({ status: 500, message: "No records loaded" });
@@ -148,4 +152,4 @@ router.get("/view-csv/:id", (req, res) => {
     });
 });
 
-export default router;
+module.exports = router;

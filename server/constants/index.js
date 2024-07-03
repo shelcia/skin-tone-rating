@@ -1,6 +1,6 @@
-export const DEMO = ["id", "number", "first_name", "last_name", "university"];
+module.exports.DEMO = ["id", "number", "first_name", "last_name", "university"];
 
-export const RATER1 = [
+module.exports.RATER1 = [
   "rater1_name",
   "rater1_gender",
   "rater1_age",
@@ -14,7 +14,7 @@ export const RATER1 = [
   "rater1_featuresc",
 ];
 
-export const RATER2 = [
+module.exports.RATER2 = [
   "rater2_name",
   "rater2_gender",
   "rater2_age",
@@ -28,7 +28,7 @@ export const RATER2 = [
   "rater2_featuresc",
 ];
 
-export const RATER3 = [
+module.exports.RATER3 = [
   "rater3_name",
   "rater3_gender",
   "rater3_age",

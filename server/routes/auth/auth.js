@@ -1,7 +1,7 @@
-import { Router } from "express";
-import jwt from "jsonwebtoken";
-import Joi from "joi";
-import dotenv from "dotenv";
+const { Router } = require("express");
+const jwt = require("jsonwebtoken");
+const Joi = require("joi");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const router = Router();
@@ -47,4 +47,4 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

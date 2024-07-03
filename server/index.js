@@ -10,10 +10,13 @@ const { DEMO, RATER1, RATER2, RATER3 } = require("./constants/index.js");
 dotenv.config();
 
 const PORT = process.env.PORT || 4050;
-const _dirname = path.resolve();
+// const _dirname = path.resolve();
 
 // Define the path to the CSV file
-const csvFilePath = path.join(_dirname, "db/players_data_cleaned-test-2.csv");
+const csvFilePath = path.join(
+  __dirname,
+  "../server/db/players_data_cleaned-test.csv"
+);
 
 const app = express();
 app.use(cors());

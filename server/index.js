@@ -240,4 +240,4 @@ app.get("/api/document/view-csv/:id", (req, res) => {
     });
 });
 
-module.exports = { records };
+// module.exports = { records };

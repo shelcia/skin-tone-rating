@@ -24,6 +24,7 @@ let records = [];
 console.log(`CSV file path: ${csvFilePath}`);
 
 const loadCsv = () => {
+  console.log("loadCsv function is being called");
   return new Promise((resolve, reject) => {
     const results = [];
     console.log(`Attempting to read CSV file at: ${csvFilePath}`);

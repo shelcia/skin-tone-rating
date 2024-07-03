@@ -13,7 +13,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define the path to the CSV file
-const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
+// const csvFilePath = path.join(__dirname, "db/players_data_cleaned-test-2.csv");
+const csvFilePath = path.join(
+  "/var/task/server/",
+  "db/players_data_cleaned-test-2.csv"
+);
 
 const app = express();
 app.use(cors());

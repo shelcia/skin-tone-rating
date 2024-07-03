@@ -16,7 +16,7 @@ const pwd = process.env.PASSWORD;
 
 //SIGNIN USER
 router.post("/signin", async (req, res) => {
-  console.log({ email, pwd });
+  // console.log({ email, pwd });
   try {
     //VALIDATION OF USER INPUTS
     await loginSchema.validateAsync(req.body);

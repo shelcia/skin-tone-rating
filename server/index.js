@@ -69,7 +69,7 @@ const loadCsv = () => {
             }
           })
           .on("end", () => {
-            console.log(results.splice(0, 1));
+            // console.log(results.splice(0, 1));
             records = results;
             console.log(`Loaded ${records.length} records from CSV`);
             resolve(results);
@@ -124,7 +124,7 @@ function getRandomElements(arr, count) {
 }
 
 app.get("/api/document/images", (req, res) => {
-  console.log(records);
+  // console.log(records);
   if (!records.length) {
     console.error("No records loaded");
     return res.status(500).json({ status: 500, message: "No records loaded" });

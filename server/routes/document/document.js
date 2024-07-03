@@ -36,7 +36,7 @@ function getRandomElements(arr, count) {
 
 // Endpoint to fetch images
 router.get("/images", (req, res) => {
-  console.log(records);
+  // console.log(records);
   if (!records.length) {
     console.error("No records loaded");
     return res.status(500).json({ status: 500, message: "No records loaded" });

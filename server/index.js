@@ -23,46 +23,65 @@ let records = [];
 
 console.log(`CSV file path: ${csvFilePath}`);
 
-const loadCsv = () => {
-  console.log("loadCsv function is being called");
+// Function to check if file exists
+const checkFileExists = (filePath) => {
   return new Promise((resolve, reject) => {
-    const results = [];
-    console.log(`Attempting to read CSV file at: ${csvFilePath}`);
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.error(`File does not exist: ${filePath}`);
+        reject(new Error(`File does not exist: ${filePath}`));
+      } else {
+        console.log(`File exists: ${filePath}`);
+        resolve(true);
+      }
+    });
+  });
+};
 
-    const stream = fs
-      .createReadStream(csvFilePath)
-      .on("error", (err) => {
-        console.error("Error opening CSV file:", err);
-        reject(err);
+// Load CSV function
+const loadCsv = () => {
+  return new Promise((resolve, reject) => {
+    console.log("loadCsv function is being called");
+
+    checkFileExists(csvFilePath)
+      .then(() => {
+        const results = [];
+        console.log(`Attempting to read CSV file at: ${csvFilePath}`);
+
+        fs.createReadStream(csvFilePath)
+          .on("error", (err) => {
+            console.error("Error opening CSV file:", err);
+            reject(err);
+          })
+          .pipe(csv())
+          .on("data", (data) => {
+            try {
+              for (let i = 1; i <= 3; i++) {
+                data[`rater${i}_st`] = data[`rater${i}_st`] || "";
+                data[`rater${i}_race`] = data[`rater${i}_race`] || "";
+                data[`rater${i}_featuresa`] = data[`rater${i}_featuresa`] || "";
+                data[`rater${i}_featuresb`] = data[`rater${i}_featuresb`] || "";
+                data[`rater${i}_featuresc`] = data[`rater${i}_featuresc`] || "";
+              }
+              results.push(data);
+            } catch (err) {
+              console.error("Error processing data:", err);
+            }
+          })
+          .on("end", () => {
+            records = results;
+            console.log(`Loaded ${records.length} records from CSV`);
+            resolve(results);
+          })
+          .on("error", (err) => {
+            console.error("Error reading CSV file:", err);
+            reject(err);
+          });
       })
-      .pipe(csv())
-      .on("data", (data) => {
-        try {
-          for (let i = 1; i <= 3; i++) {
-            data[`rater${i}_st`] = data[`rater${i}_st`] || "";
-            data[`rater${i}_race`] = data[`rater${i}_race`] || "";
-            data[`rater${i}_featuresa`] = data[`rater${i}_featuresa`] || "";
-            data[`rater${i}_featuresb`] = data[`rater${i}_featuresb`] || "";
-            data[`rater${i}_featuresc`] = data[`rater${i}_featuresc`] || "";
-          }
-          results.push(data);
-        } catch (err) {
-          console.error("Error processing data:", err);
-        }
-      })
-      .on("end", () => {
-        records = results;
-        console.log(`Loaded ${records.length} records from CSV`);
-        resolve(results);
-      })
-      .on("error", (err) => {
-        console.error("Error reading CSV file:", err);
+      .catch((err) => {
+        console.error("Failed to verify CSV file existence:", err);
         reject(err);
       });
-
-    stream.on("error", (err) => {
-      console.error("Stream error:", err);
-    });
   });
 };
 

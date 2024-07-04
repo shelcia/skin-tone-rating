@@ -97,23 +97,40 @@ export interface SurveyResponse {
   race_latino_hispanic: string;
   dominant_race: string;
   face_confidence: string;
+  rater1_name: string;
+  rater1_gender: string;
+  rater1_age: string;
+  rater1_edu: string;
+  rater1_u_race: string;
+  rater1_skin: string;
   rater1_st: string;
   rater1_race: string;
   rater1_featuresa: string;
   rater1_featuresb: string;
   rater1_featuresc: string;
+  rater2_name: string;
+  rater2_gender: string;
+  rater2_age: string;
+  rater2_edu: string;
+  rater2_u_race: string;
+  rater2_skin: string;
   rater2_st: string;
   rater2_race: string;
   rater2_featuresa: string;
   rater2_featuresb: string;
   rater2_featuresc: string;
+  rater3_name: string;
+  rater3_gender: string;
+  rater3_age: string;
+  rater3_edu: string;
+  rater3_u_race: string;
+  rater3_skin: string;
   rater3_st: string;
   rater3_race: string;
   rater3_featuresa: string;
   rater3_featuresb: string;
   rater3_featuresc: string;
 }
-
 export interface EvaluationResponse {
   id: string;
   st: string;

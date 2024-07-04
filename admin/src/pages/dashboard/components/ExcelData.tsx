@@ -27,60 +27,41 @@ const ExcelData: React.FC = () => {
 
   const fetchSurveyData = async () => {
     setIsLoading(true);
-    // const key = "id";
     try {
       let combinedCSV = await documentService.getById("DEMO");
-      const evalutions = await evaluationService.getById("evaluations");
+      const evaluations = await evaluationService.getById("evaluations");
 
-      combinedCSV = combinedCSV.map((row) => {
+      combinedCSV = combinedCSV.map((row: SurveyResponse) => {
         const updatedRow = { ...row };
-        evalutions.message.map((evalu) => {
-          if (row.id === evalu.id) {
-            updatedRow.st = evalu.st;
-            updatedRow.race = evalu.race;
-            updatedRow.featuresa = evalu.featuresa;
-            updatedRow.featuresb = evalu.featuresb;
-            updatedRow.featuresc = evalu.featuresc;
+        const matchedEvaluations = evaluations.message.filter(
+          (evalu) => parseInt(row.id) === parseInt(evalu.id)
+        );
+
+        matchedEvaluations.forEach((evalu, index) => {
+          const raterSlot = `rater${index + 1}`;
+          if (index < 3) {
+            updatedRow[`${raterSlot}_name`] = evalu.name;
+            updatedRow[`${raterSlot}_gender`] = evalu.gender;
+            updatedRow[`${raterSlot}_age`] = JSON.stringify(evalu.age);
+            updatedRow[`${raterSlot}_edu`] = evalu.edu;
+            updatedRow[`${raterSlot}_u_race`] = evalu.u_race;
+            updatedRow[`${raterSlot}_skin`] = evalu.skin;
+
+            updatedRow[`${raterSlot}_st`] = evalu.evaluations[0].st;
+            updatedRow[`${raterSlot}_race`] = evalu.evaluations[0].race;
+            updatedRow[`${raterSlot}_featuresa`] =
+              evalu.evaluations[0].featuresa;
+            updatedRow[`${raterSlot}_featuresb`] =
+              evalu.evaluations[0].featuresb;
+            updatedRow[`${raterSlot}_featuresc`] =
+              evalu.evaluations[0].featuresc;
           }
         });
 
         return updatedRow;
       });
-      // const RATER1 = await documentService.getById("RATER1");
-      // const RATER2 = await documentService.getById("RATER2");
-      // const RATER3 = await documentService.getById("RATER3");
-      // console.log(DEMO.splice(0, 5));
-      // const res = [...DEMO.slice(0, 100)];
-      // const combinedCSV = DEMO.map((row, index: number) => ({
-      //   ...row,
-      //   // ...RATER1[index],
-      //   // ...RATER2[index],
-      //   // ...RATER3[index],
-      // }));
 
-      // res.sort((a, b) => {
-      //   if (parseInt(a[key]) < parseInt(b[key])) return -1;
-      //   if (parseInt(a[key]) > parseInt(b[key])) return 1;
-      //   return 0;
-      // });
-
-      // console.log(combinedCSV);
       setSurveys(combinedCSV);
-      // const evalRes = await evaluationService.getById("evaluations");
-      // const evaluations = evalRes.message;
-
-      // const mergedData = combinedCSV.map((csvRow) => {
-      //   const evaluation = evaluations.find(
-      //     (evalRow) => evalRow.id === csvRow.id
-      //   );
-      //   return {
-      //     ...csvRow,
-      //     evalRow,
-      //   };
-      // });
-
-      // setSurveys(mergedData);
-
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching survey data:", error);

@@ -43,7 +43,7 @@ const Survey = () => {
       setIsIntroSubmitted(true);
       if (
         surveyAnswers.age &&
-        surveyAnswers.education &&
+        // surveyAnswers.education &&
         surveyAnswers.gender &&
         surveyAnswers.race &&
         surveyAnswers.skin

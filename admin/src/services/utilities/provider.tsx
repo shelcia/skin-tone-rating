@@ -2,7 +2,12 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { BACKEND_URL } from "../api";
 // import { LOCALHOST_URL } from "../api";
-import { AuthResponse, AuthPayload, SurveyResponse } from "./types";
+import {
+  AuthResponse,
+  AuthPayload,
+  SurveyResponse,
+  EvalResponse,
+} from "./types";
 
 export class ApiService<T, P> {
   private BASE_URL: string;
@@ -136,4 +141,8 @@ export const authLoginService = new ApiService<AuthResponse, AuthPayload>(
 );
 export const documentService = new ApiService<SurveyResponse[], AuthPayload>(
   "document/view-csv"
+);
+
+export const evaluationService = new ApiService<EvalResponse, AuthPayload>(
+  "document"
 );

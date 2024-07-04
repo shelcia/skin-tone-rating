@@ -13,7 +13,10 @@ import {
 import { Box } from "@mui/material";
 // import { DeleteRounded } from "@mui/icons-material";
 // import { error, secondary } from "../../../theme/themeColors";
-import { documentService } from "../../../services/utilities/provider";
+import {
+  documentService,
+  evaluationService,
+} from "../../../services/utilities/provider";
 
 const ExcelData: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -26,18 +29,34 @@ const ExcelData: React.FC = () => {
     setIsLoading(true);
     // const key = "id";
     try {
-      const DEMO = await documentService.getById("DEMO");
-      const RATER1 = await documentService.getById("RATER1");
-      const RATER2 = await documentService.getById("RATER2");
-      const RATER3 = await documentService.getById("RATER3");
+      let combinedCSV = await documentService.getById("DEMO");
+      const evalutions = await evaluationService.getById("evaluations");
+
+      combinedCSV = combinedCSV.map((row) => {
+        const updatedRow = { ...row };
+        evalutions.message.map((evalu) => {
+          if (row.id === evalu.id) {
+            updatedRow.st = evalu.st;
+            updatedRow.race = evalu.race;
+            updatedRow.featuresa = evalu.featuresa;
+            updatedRow.featuresb = evalu.featuresb;
+            updatedRow.featuresc = evalu.featuresc;
+          }
+        });
+
+        return updatedRow;
+      });
+      // const RATER1 = await documentService.getById("RATER1");
+      // const RATER2 = await documentService.getById("RATER2");
+      // const RATER3 = await documentService.getById("RATER3");
       // console.log(DEMO.splice(0, 5));
       // const res = [...DEMO.slice(0, 100)];
-      const res = DEMO.map((row, index: number) => ({
-        ...row,
-        ...RATER1[index],
-        ...RATER2[index],
-        ...RATER3[index],
-      }));
+      // const combinedCSV = DEMO.map((row, index: number) => ({
+      //   ...row,
+      //   // ...RATER1[index],
+      //   // ...RATER2[index],
+      //   // ...RATER3[index],
+      // }));
 
       // res.sort((a, b) => {
       //   if (parseInt(a[key]) < parseInt(b[key])) return -1;
@@ -45,8 +64,23 @@ const ExcelData: React.FC = () => {
       //   return 0;
       // });
 
-      console.log(res);
-      setSurveys(res);
+      // console.log(combinedCSV);
+      setSurveys(combinedCSV);
+      // const evalRes = await evaluationService.getById("evaluations");
+      // const evaluations = evalRes.message;
+
+      // const mergedData = combinedCSV.map((csvRow) => {
+      //   const evaluation = evaluations.find(
+      //     (evalRow) => evalRow.id === csvRow.id
+      //   );
+      //   return {
+      //     ...csvRow,
+      //     evalRow,
+      //   };
+      // });
+
+      // setSurveys(mergedData);
+
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching survey data:", error);
@@ -95,7 +129,7 @@ const ExcelData: React.FC = () => {
   return (
     <Box sx={{ height: "70vh", width: "100%" }}>
       <DataGrid
-        getRowId={(row) => row.first_name}
+        getRowId={(row) => row.id}
         rows={surveys}
         columns={SURVEY_COL}
         initialState={{

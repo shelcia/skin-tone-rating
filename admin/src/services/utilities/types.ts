@@ -113,3 +113,31 @@ export interface SurveyResponse {
   rater3_featuresb: string;
   rater3_featuresc: string;
 }
+
+export interface EvaluationResponse {
+  id: string;
+  st: string;
+  race: string;
+  featuresa: string;
+  featuresb: string;
+  featuresc: string;
+  _id: string;
+}
+
+export interface EvaluationResponse {
+  _id: string;
+  id: string;
+  name: string;
+  gender: string;
+  age: number;
+  edu: string;
+  u_race: string;
+  skin: string;
+  evaluations: EvaluationResponse[];
+  __v: string;
+}
+
+export interface EvalResponse {
+  status: string;
+  message: EvaluationResponse[];
+}

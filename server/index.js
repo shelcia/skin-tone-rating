@@ -140,6 +140,16 @@ function getRandomElements(arr, count) {
   return shuffled.slice(0, count);
 }
 
+function isErrUni(uni) {
+  const errUnis = [
+    "South Florida Bulls",
+    "Oklahoma State Cowboys",
+    "Iowa State Cyclones",
+    "San Jos√É¬© State Spartans",
+  ];
+  return errUnis.includes(uni);
+}
+
 app.get("/api/document/images", (req, res) => {
   // console.log(records);
   if (!records.length) {
@@ -151,7 +161,11 @@ app.get("/api/document/images", (req, res) => {
   // );
   let filteredRecords = records.filter(async (record) => {
     const evaluationCount = await getEvaluationCount(record);
-    return evaluationCount < 3 && record.filename !== "0";
+    return (
+      evaluationCount < 3 &&
+      record.filename !== "0" &&
+      !isErrUni(record.university)
+    );
   });
 
   // filteredRecords = filteredRecords.filter((record) => record.filename !== "0");

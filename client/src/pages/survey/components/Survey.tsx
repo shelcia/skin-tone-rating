@@ -71,8 +71,8 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          setImages(res.data.splice(0, 3));
-          // setImages(res.data);
+          // setImages(res.data.splice(0, 3));
+          setImages(res.data);
         }
       })
       .finally(() => setIsLoading(false));

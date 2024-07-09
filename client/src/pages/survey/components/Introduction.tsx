@@ -17,14 +17,14 @@ interface IntroductionProps {
 const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
   const [questions] = useState<QuestionType[]>([
     {
-      question: "What is your name?",
+      question: "What is your first and last name?",
       options: [],
       type: "TEXT",
       name: "name",
     },
     {
       question: "What is your gender?",
-      options: ["Man", "Women", "Other"],
+      options: ["Man", "Woman", "Other"],
       type: "MCQ",
       name: "gender",
     },

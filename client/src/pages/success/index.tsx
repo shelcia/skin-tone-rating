@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { secondary, success } from "../../theme/themeColors";
-import { useNavigate } from "react-router-dom";
+import { success } from "../../theme/themeColors";
+// import { useNavigate } from "react-router-dom";
 
 const SuccessPage = () => {
-  const navigate = useNavigate();
-  const uniqueId = localStorage.getItem("uniqueId");
+  // const navigate = useNavigate();
+  // const uniqueId = localStorage.getItem("uniqueId");
 
   const [copied, setCopied] = useState(false);
 
@@ -34,7 +34,7 @@ const SuccessPage = () => {
         <Typography variant="h5">
           Thank you for completing the Survey
         </Typography>
-        {uniqueId && (
+        {/* {uniqueId && (
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <Typography sx={{ fontWeight: 700, color: secondary[400] }}>
               YOUR MECHANICAL TURK CODE: {uniqueId}
@@ -50,11 +50,11 @@ const SuccessPage = () => {
               {copied ? "Copied" : "Copy"}
             </Button>
           </Box>
-        )}
+        )} */}
 
-        <Button variant="contained" onClick={() => navigate("/")}>
+        {/* <Button variant="contained" onClick={() => navigate("/")}>
           Go Home
-        </Button>
+        </Button> */}
       </Box>
     </Container>
   );

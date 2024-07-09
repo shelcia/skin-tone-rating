@@ -32,8 +32,10 @@ const Exit: React.FC<ExitProps> = () => {
   return (
     <>
       <Typography>
-        Thank you for your input! Please follow the link below in order to
-        capture your participation in this study.
+        Thank you for your input!. Please take a screenshot and send it to your
+        instructor. email: aavery2@wisc.edu
+        {/* Please follow the link below in order to
+        capture your participation in this study. */}
       </Typography>
       {/* <Typography>
         https://app.prolific.com/submissions/complete?cc=CQ2CR1H1

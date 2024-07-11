@@ -182,7 +182,8 @@ app.post("/api/document/evaluate", async (req, res) => {
   const { name, gender, age, edu, u_race, skin, evaluations } = req.body;
 
   try {
-    evaluations.forEach(async (evaluation) => {
+    // Create an array of promises
+    const promises = evaluations.map(async (evaluation) => {
       const record = new Evaluation({
         id: evaluation.id,
         name: name,
@@ -203,13 +204,18 @@ app.post("/api/document/evaluate", async (req, res) => {
         ],
       });
 
-      await record.save();
+      return await record.save();
     });
 
-    res.status(200).json({ status: 200, message: "Evaluation recorded" });
+    // Wait for all promises to resolve
+    await Promise.all(promises);
+
+    res.status(200).json({ status: 200, message: "Evaluations recorded" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ status: 500, message: "Failed to save evaluation" });
+    res
+      .status(500)
+      .json({ status: 500, message: "Failed to save evaluations" });
   }
 });
 

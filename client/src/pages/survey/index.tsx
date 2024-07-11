@@ -26,6 +26,7 @@ const Survey = () => {
   const [isSurveySubmitted, setIsSurveySubmitted] = useState<boolean>(false);
   const [isExitSubmitted, setIsExitSubmitted] = useState<boolean>(false);
   const [openSnack, setIsOpenSnack] = React.useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // New state variable
 
   const handleNext = () => {
     if (activeStep === 0) {
@@ -42,6 +43,7 @@ const Survey = () => {
     } else if (activeStep === 1) {
       setIsIntroSubmitted(true);
       if (
+        surveyAnswers.name &&
         surveyAnswers.age &&
         // surveyAnswers.education &&
         surveyAnswers.gender &&
@@ -81,8 +83,10 @@ const Survey = () => {
   };
 
   const handleReset = () => {
-    setIsExitSubmitted(true);
-    sendAnswer();
+    if (!isSubmitting) {
+      setIsExitSubmitted(true);
+      sendAnswer();
+    }
 
     // if (
     //   !surveyAnswers.isInterested ||
@@ -96,6 +100,8 @@ const Survey = () => {
   };
 
   const sendAnswer = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     // surveyAnswers.answers.map(async (answer: RaceAnswer) => {
     let evaluations: Evaluation[] = [];
     surveyAnswers.answers.map((answer) => {

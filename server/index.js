@@ -179,7 +179,8 @@ app.get("/api/document/images", (req, res) => {
 
 // Endpoint to submit evaluation
 app.post("/api/document/evaluate", async (req, res) => {
-  const { name, gender, age, edu, u_race, skin, evaluations } = req.body;
+  const { name, gender, age, edu, u_race, skin, evaluations, practise } =
+    req.body;
 
   try {
     // Create an array of promises
@@ -200,6 +201,40 @@ app.post("/api/document/evaluate", async (req, res) => {
             featuresa: evaluation.featuresa,
             featuresb: evaluation.featuresb,
             featuresc: evaluation.featuresc,
+          },
+        ],
+        practise: [
+          {
+            id: practise[0]?.id,
+            st: practise[0]?.skin,
+            race: practise[0]?.race,
+            featuresa: practise[0]?.lip,
+            featuresb: practise[0]?.nose,
+            featuresc: practise[0]?.overall,
+          },
+          {
+            id: practise[1]?.id,
+            st: practise[1]?.skin,
+            race: practise[1]?.race,
+            featuresa: practise[1]?.lip,
+            featuresb: practise[1]?.nose,
+            featuresc: practise[1]?.overall,
+          },
+          {
+            id: practise[2]?.id,
+            st: practise[2]?.skin,
+            race: practise[2]?.race,
+            featuresa: practise[2]?.lip,
+            featuresb: practise[2]?.nose,
+            featuresc: practise[2]?.overall,
+          },
+          {
+            id: practise[3]?.id,
+            st: practise[3]?.skin,
+            race: practise[3]?.race,
+            featuresa: practise[3]?.lip,
+            featuresb: practise[3]?.nose,
+            featuresc: practise[3]?.overall,
           },
         ],
       });

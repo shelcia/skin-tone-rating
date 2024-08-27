@@ -55,6 +55,30 @@ const ExcelData: React.FC = () => {
               evalu.evaluations[0].featuresb;
             updatedRow[`${raterSlot}_featuresc`] =
               evalu.evaluations[0].featuresc;
+
+            updatedRow[`practise1_st`] = evalu?.practise?.[0]?.st;
+            updatedRow[`practise1_race`] = evalu?.practise?.[0]?.race;
+            updatedRow[`practise1_featuresa`] = evalu?.practise?.[0]?.featuresa;
+            updatedRow[`practise1_featuresb`] = evalu?.practise?.[0]?.featuresb;
+            updatedRow[`practise1_featuresc`] = evalu?.practise?.[0]?.featuresc;
+
+            updatedRow[`practise2_st`] = evalu?.practise?.[1]?.st;
+            updatedRow[`practise2_race`] = evalu?.practise?.[1]?.race;
+            updatedRow[`practise2_featuresa`] = evalu?.practise?.[1]?.featuresa;
+            updatedRow[`practise2_featuresb`] = evalu?.practise?.[1]?.featuresb;
+            updatedRow[`practise2_featuresc`] = evalu?.practise?.[1]?.featuresc;
+
+            updatedRow[`practise3_st`] = evalu?.practise?.[2]?.st;
+            updatedRow[`practise3_race`] = evalu?.practise?.[2]?.race;
+            updatedRow[`practise3_featuresa`] = evalu?.practise?.[2]?.featuresa;
+            updatedRow[`practise3_featuresb`] = evalu?.practise?.[2]?.featuresb;
+            updatedRow[`practise3_featuresc`] = evalu?.practise?.[2]?.featuresc;
+
+            updatedRow[`practise4_st`] = evalu?.practise?.[3]?.st;
+            updatedRow[`practise4_race`] = evalu?.practise?.[3]?.race;
+            updatedRow[`practise4_featuresa`] = evalu?.practise?.[3]?.featuresa;
+            updatedRow[`practise4_featuresb`] = evalu?.practise?.[3]?.featuresb;
+            updatedRow[`practise4_featuresc`] = evalu?.practise?.[3]?.featuresc;
           }
         });
 

@@ -130,6 +130,22 @@ export interface SurveyResponse {
   rater3_featuresa: string;
   rater3_featuresb: string;
   rater3_featuresc: string;
+
+  practise1_st: string;
+  practise1_race: string;
+  practise1_featuresa: string;
+  practise1_featuresb: string;
+  practise1_featuresc: string;
+  practise2_st: string;
+  practise2_race: string;
+  practise2_featuresa: string;
+  practise2_featuresb: string;
+  practise2_featuresc: string;
+  practise3_st: string;
+  practise3_race: string;
+  practise3_featuresa: string;
+  practise3_featuresb: string;
+  practise3_featuresc: string;
 }
 export interface EvaluationResponse {
   id: string;
@@ -151,6 +167,7 @@ export interface EvaluationResponse {
   u_race: string;
   skin: string;
   evaluations: EvaluationResponse[];
+  practise: EvaluationResponse[];
   __v: string;
 }
 

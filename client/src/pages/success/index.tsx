@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Box, Container, Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { success } from "../../theme/themeColors";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SuccessPage = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const uniqueId = localStorage.getItem("uniqueId");
 
   const [copied, setCopied] = useState(false);
@@ -17,6 +17,22 @@ const SuccessPage = () => {
       }, 3000);
     }
   }, [copied]);
+
+  useEffect(() => {
+    // Replace the current history entry with this one to prevent back navigation
+    window.history.replaceState(null, "", window.location.href);
+
+    // Listen for back/forward navigation events
+    const handlePopState = () => {
+      navigate("/success", { replace: true }); // Redirect to home or another page
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
 
   return (
     <Container sx={{ p: 2 }}>

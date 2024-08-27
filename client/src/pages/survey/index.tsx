@@ -43,9 +43,9 @@ const Survey = () => {
     } else if (activeStep === 1) {
       setIsIntroSubmitted(true);
       if (
-        surveyAnswers.name &&
+        surveyAnswers.prolificId &&
         surveyAnswers.age &&
-        // surveyAnswers.education &&
+        surveyAnswers.education &&
         surveyAnswers.gender &&
         surveyAnswers.race &&
         surveyAnswers.skin
@@ -126,7 +126,9 @@ const Survey = () => {
       u_race: surveyAnswers.race,
       skin: surveyAnswers.skin,
       evaluations: evaluations,
+      practise: surveyAnswers.pratise,
     };
+    console.log(body);
     await surveyEditService
       .post(body)
       .then((res) => {
@@ -148,6 +150,7 @@ const Survey = () => {
       answers: [],
       email: "",
       isInterested: "",
+      prolificId: "",
     });
     navigate("/success");
   };

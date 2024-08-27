@@ -16,12 +16,13 @@ interface IntroductionProps {
 
 const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
   const [questions] = useState<QuestionType[]>([
-    {
-      question: "What is your first and last name?",
-      options: [],
-      type: "TEXT",
-      name: "name",
-    },
+    // {
+    //   question: "What is your first and last name?",
+    //   options: [],
+    //   type: "TEXT",
+    //   name: "name",
+    // },
+
     {
       question: "What is your gender?",
       options: ["Man", "Woman", "Other"],
@@ -34,21 +35,21 @@ const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
       type: "TEXT",
       name: "age",
     },
-    // {
-    //   question:
-    //     "Which of the following best describes the highest level of education you have completed?",
-    //   options: [
-    //     "Some high school",
-    //     "High school diploma/GED (General Education Diploma)",
-    //     "Some college, but no degree",
-    //     "Associate degree (e.g., AA, AS)",
-    //     "Bachelor's degree (e.g., BA, BS)",
-    //     "Master's degree (e.g., MA, MS, MBA)",
-    //     "Doctoral degree (e.g., PhD, EdD, MD, JD)",
-    //   ],
-    //   type: "MCQ",
-    //   name: "education",
-    // },
+    {
+      question:
+        "Which of the following best describes the highest level of education you have completed?",
+      options: [
+        "Some high school",
+        "High school diploma/GED (General Education Diploma)",
+        "Some college, but no degree",
+        "Associate degree (e.g., AA, AS)",
+        "Bachelor's degree (e.g., BA, BS)",
+        "Master's degree (e.g., MA, MS, MBA)",
+        "Doctoral degree (e.g., PhD, EdD, MD, JD)",
+      ],
+      type: "MCQ",
+      name: "education",
+    },
     {
       question: "What is your race",
       options: [
@@ -61,6 +62,12 @@ const Introduction: React.FC<IntroductionProps> = ({ isIntroSubmitted }) => {
       ],
       type: "MCQ",
       name: "race",
+    },
+    {
+      question: "What is your Prolific ID?",
+      options: [],
+      type: "TEXT",
+      name: "prolificId",
     },
   ]);
 

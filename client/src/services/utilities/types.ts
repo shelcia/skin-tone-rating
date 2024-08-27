@@ -43,6 +43,7 @@ export interface SurveyAnswerResponse {
   answers: SurveyAnswers[];
   email: string;
   isInterested: string;
+  prolificId: string;
 }
 
 export interface SurveyResponse {
@@ -67,6 +68,7 @@ export interface SurveyAnswerPayload {
   u_race: string;
   skin: string;
   evaluations: Evaluation[];
+  practise: SurveyAnswers[];
 }
 
 export interface PersonImage {

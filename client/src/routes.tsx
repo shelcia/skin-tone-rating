@@ -38,11 +38,11 @@ const routes = [
         path: "questions",
         element: <QuestionsPage />,
       },
-      {
-        path: "success",
-        element: <SuccessPage />,
-      },
     ],
+  },
+  {
+    path: "success",
+    element: <SuccessPage />,
   },
   {
     path: "*",

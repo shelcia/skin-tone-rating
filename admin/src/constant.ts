@@ -570,4 +570,82 @@ export const PLAYER_DATA: GridColDef[] = [
     headerName: "Rater 3 Features C",
     width: 200,
   },
+
+  {
+    field: "practise1_st",
+    headerName: "Practise 1 ST",
+    width: 150,
+  },
+  {
+    field: "practise1_race",
+    headerName: "Practise 1 Race",
+    width: 150,
+  },
+  {
+    field: "practise1_featuresa",
+    headerName: "Practise 1 Features A",
+    width: 200,
+  },
+  {
+    field: "practise1_featuresb",
+    headerName: "Practise 1 Features B",
+    width: 200,
+  },
+  {
+    field: "practise1_featuresc",
+    headerName: "Practise 1 Features C",
+    width: 200,
+  },
+
+  {
+    field: "practise2_st",
+    headerName: "Practise 2 ST",
+    width: 150,
+  },
+  {
+    field: "practise2_race",
+    headerName: "Practise 2 Race",
+    width: 150,
+  },
+  {
+    field: "practise2_featuresa",
+    headerName: "Practise 2 Features A",
+    width: 200,
+  },
+  {
+    field: "practise2_featuresb",
+    headerName: "Practise 2 Features B",
+    width: 200,
+  },
+  {
+    field: "practise2_featuresc",
+    headerName: "Practise 2 Features C",
+    width: 200,
+  },
+
+  {
+    field: "practise3_st",
+    headerName: "Practise 3 ST",
+    width: 150,
+  },
+  {
+    field: "practise3_race",
+    headerName: "Practise 3 Race",
+    width: 150,
+  },
+  {
+    field: "practise3_featuresa",
+    headerName: "Practise 3 Features A",
+    width: 200,
+  },
+  {
+    field: "practise3_featuresb",
+    headerName: "Practise 3 Features B",
+    width: 200,
+  },
+  {
+    field: "practise3_featuresc",
+    headerName: "Practise 3 Features C",
+    width: 200,
+  },
 ];
